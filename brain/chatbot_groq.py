@@ -1,14 +1,16 @@
 """
-Chatbot de Gestión Humana Prebel (prototipo de consola) sobre Groq.
+Chatbot de Gestión Humana Prebel (prototipo de consola) sobre Groq o Gemini.
 
 Responde solo con base en los documentos Markdown de docs/. En cada turno
 recupera los fragmentos más relevantes (BM25, sin dependencias externas) y
 los inyecta como contexto, en lugar de enviar todo el corpus (~80 KB) en cada
 llamada, que excede los límites de tokens por minuto del plan gratuito de Groq.
 
-Uso:
+Uso (cualquiera de los dos proveedores, vía API compatible con OpenAI):
+    export GEMINI_API_KEY="..."            # aistudio.google.com
+    # o bien
     export GROQ_API_KEY="gsk_..."          # console.groq.com
-    export GROQ_MODEL="qwen/qwen3-32b"     # opcional
+    export LLM_MODEL="..."                 # opcional, sobrescribe el modelo
     python brain/chatbot_groq.py
 """
 
@@ -20,7 +22,7 @@ import unicodedata
 from collections import Counter
 from pathlib import Path
 
-from groq import Groq
+from openai import OpenAI
 
 # --------------------------------------------------------------------------
 # Configuración
@@ -28,7 +30,18 @@ from groq import Groq
 DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
 INSTRUCCIONES_FILE = "Instrucciones_Tono_Ejemplos_Restricciones.md"
 
-MODEL = os.environ.get("GROQ_MODEL", "qwen/qwen3-32b")
+PROVEEDORES = {
+    "gemini": {
+        "env_key": "GEMINI_API_KEY",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+        "modelo": "gemini-flash-lite-latest",
+    },
+    "groq": {
+        "env_key": "GROQ_API_KEY",
+        "base_url": "https://api.groq.com/openai/v1",
+        "modelo": "qwen/qwen3-32b",
+    },
+}
 TOP_K = 5                 # fragmentos recuperados por pregunta
 MAX_CONTEXT_CHARS = 9000  # tope del contexto inyectado (~2.5k tokens)
 MAX_CHUNK_CHARS = 2500    # tamaño máximo de un fragmento
@@ -224,18 +237,28 @@ def limpiar_respuesta(texto: str) -> str:
 
 
 def main():
-    api_key = os.environ.get("GROQ_API_KEY")
+    nombre = os.environ.get("LLM_PROVIDER") or next(
+        (n for n, p in PROVEEDORES.items() if os.environ.get(p["env_key"])), None
+    )
+    if nombre not in PROVEEDORES:
+        sys.exit("Define GEMINI_API_KEY o GROQ_API_KEY (o LLM_PROVIDER=gemini|groq).")
+    prov = PROVEEDORES[nombre]
+    api_key = os.environ.get(prov["env_key"])
     if not api_key:
-        sys.exit("Define la variable de entorno GROQ_API_KEY (console.groq.com).")
+        sys.exit(f"Falta la variable de entorno {prov['env_key']}.")
+    modelo = os.environ.get("LLM_MODEL", prov["modelo"])
 
     instrucciones, fragmentos = cargar_corpus()
     indice = BM25(fragmentos)
     fuentes = sorted({f["fuente"] for f in fragmentos})
-    client = Groq(api_key=api_key)
+    # Tiempo límite explícito: sin él, el SDK reintenta los 503 por saturación
+    # del proveedor y la consola parece colgada.
+    client = OpenAI(api_key=api_key, base_url=prov["base_url"], timeout=60, max_retries=2)
 
     system = {"role": "system", "content": system_prompt(instrucciones, fuentes)}
     historial: list[dict] = []  # solo pares usuario/asistente, sin contexto
 
+    print(f"Proveedor: {nombre} | Modelo: {modelo}")
     print(f"Corpus: {len(fragmentos)} fragmentos de {len(fuentes)} documentos.")
     print("CHATBOT GESTIÓN HUMANA PREBEL — escribe 'salir' para terminar\n")
 
@@ -266,13 +289,13 @@ def main():
 
         try:
             response = client.chat.completions.create(
-                model=MODEL,
+                model=modelo,
                 messages=mensajes,
                 temperature=TEMPERATURE,
             )
             reply = limpiar_respuesta(response.choices[0].message.content)
         except Exception as e:  # red, límite de tasa, modelo inexistente, etc.
-            print(f"[Error al consultar Groq: {e}]\n")
+            print(f"[Error al consultar el modelo: {e}]\n")
             continue
 
         # En el historial se guarda la pregunta sin el contexto para no
