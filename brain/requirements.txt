@@ -1,0 +1,16 @@
+# Dependencias del Chatbot Prebel - Empleado Digital
+# Base de datos vectorial (gratis, local, sin suscripción)
+chromadb==1.0.7
+
+# Framework RAG
+langchain==0.3.25
+langchain-community==0.3.24
+langchain-chroma==0.2.4
+langchain-google-genai==2.1.5
+
+# Google Gemini API
+google-genai==1.14.0
+
+# Utilidades
+python-dotenv==1.1.0
+rich==14.0.0
