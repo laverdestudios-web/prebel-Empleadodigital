@@ -12,6 +12,7 @@ class Config:
     phone_number_id: str
     graph_version: str
     permitir_sin_firma: bool
+    chat_pruebas: bool = False
 
     @classmethod
     def desde_entorno(cls) -> "Config":
@@ -23,4 +24,7 @@ class Config:
             graph_version=os.environ.get("WHATSAPP_GRAPH_VERSION", "v21.0"),
             # Solo para pruebas locales con curl. Nunca en un entorno expuesto.
             permitir_sin_firma=os.environ.get("WEBHOOK_PERMITIR_SIN_FIRMA", "") == "1",
+            # Página /prueba para chatear con el motor sin WhatsApp. Sin
+            # autenticación y consume cuota del LLM: solo en local o demo.
+            chat_pruebas=os.environ.get("CHAT_PRUEBAS", "") == "1",
         )

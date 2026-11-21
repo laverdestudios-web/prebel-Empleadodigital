@@ -19,6 +19,9 @@ WA_ID = "573001234567"
 class MotorFalso:
     modelo, fragmentos = "falso", [1, 2, 3]
 
+    def olvidar(self, conversacion_id):
+        pass
+
     def __init__(self, falla=False):
         self.llamadas, self.falla = [], falla
 
@@ -208,3 +211,35 @@ def test_partir_texto_respeta_limite():
     partes = partir_texto(texto, 1000)
     assert all(len(p) <= 1000 for p in partes)
     assert " ".join(partes).split() == texto.split()  # no se pierden palabras
+
+
+# --- Modo pruebas (/prueba) ---------------------------------------------------
+def test_prueba_deshabilitada_por_defecto(entorno):
+    cliente, *_ = entorno
+    assert cliente.get("/prueba").status_code == 404
+    assert cliente.post("/prueba/chat", json={"mensaje": "hola", "sesion": "a"}).status_code == 404
+
+
+def test_prueba_chat():
+    motor = MotorFalso()
+    cliente = TestClient(crear_app(motor, WhatsAppFalso(), config(chat_pruebas=True)))
+    assert "modo pruebas" in cliente.get("/prueba").text
+    r = cliente.post("/prueba/chat", json={"mensaje": "auxilio de gafas", "sesion": "abc"})
+    assert r.status_code == 200 and r.json()["respuesta"] == "respuesta a: auxilio de gafas"
+    assert motor.llamadas == [("auxilio de gafas", "prueba:abc")]  # no choca con un wa_id
+
+
+@pytest.mark.parametrize("datos", [
+    {"mensaje": "", "sesion": "abc"},
+    {"mensaje": "x" * 1001, "sesion": "abc"},
+    {"mensaje": "hola", "sesion": "../etc"},
+])
+def test_prueba_chat_valida_entrada(datos):
+    cliente = TestClient(crear_app(MotorFalso(), WhatsAppFalso(), config(chat_pruebas=True)))
+    assert cliente.post("/prueba/chat", json=datos).status_code == 422
+
+
+def test_prueba_chat_error_del_llm_502():
+    cliente = TestClient(crear_app(MotorFalso(falla=True), WhatsAppFalso(), config(chat_pruebas=True)))
+    r = cliente.post("/prueba/chat", json={"mensaje": "hola", "sesion": "abc"})
+    assert r.status_code == 502 and "503 UNAVAILABLE" in r.json()["detail"]

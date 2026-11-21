@@ -6,6 +6,7 @@ API FastAPI que conecta WhatsApp Cloud API con el motor de `brain/chatbot_groq.p
 |---|---|
 | `GET /health` | Estado del servicio y del motor (modelo, fragmentos cargados) |
 | `GET /webhook` | Verificación de Meta (`hub.mode`, `hub.verify_token`, `hub.challenge`) |
+| `GET /prueba` | Chat de pruebas (solo con `CHAT_PRUEBAS=1`) |
 | `POST /webhook` | Mensajes entrantes. Valida `X-Hub-Signature-256`, responde 200 de inmediato y procesa en segundo plano |
 
 Comportamiento del `POST /webhook`:
@@ -15,6 +16,19 @@ Comportamiento del `POST /webhook`:
 - Mensajes no texto (audio, imagen): respuesta fija pidiendo texto.
 - Historial independiente por `wa_id`, con expiración a los 30 min.
 - Si el LLM falla, el colaborador recibe un mensaje de error, no silencio.
+
+## Probar el chatbot sin WhatsApp (`/prueba`)
+
+Página de chat que usa el mismo motor que el webhook. Se habilita con
+`CHAT_PRUEBAS=1` y está apagada por defecto (no tiene autenticación y consume
+cuota del LLM).
+
+**Windows, un clic:** copiar `server\.env.example` a `server\.env`, escribir
+`GEMINI_API_KEY` y ejecutar `server\probar_chatbot.bat`. Se abre
+`http://localhost:8000/prueba`.
+
+Cada pestaña es una conversación independiente; "Nueva conversación" borra el
+historial. Las respuestas muestran el tiempo y el modelo usado.
 
 ## Ejecutar en local (desde la raíz del repositorio)
 

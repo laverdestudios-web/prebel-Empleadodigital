@@ -14,10 +14,13 @@ import hashlib
 import hmac
 import logging
 import threading
+import time
 from collections import OrderedDict
+from pathlib import Path
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import HTMLResponse, PlainTextResponse
+from pydantic import BaseModel, Field
 
 from brain.chatbot_groq import MotorChat
 from server.config import Config
@@ -81,6 +84,14 @@ def extraer_mensajes(payload: dict) -> list[dict]:
                 if m.get("id") and m.get("from"):
                     mensajes.append(m)
     return mensajes
+
+
+class MensajePrueba(BaseModel):
+    mensaje: str = Field(min_length=1, max_length=MAX_CARACTERES_PREGUNTA)
+    sesion: str = Field(min_length=1, max_length=64, pattern=r"^[A-Za-z0-9_-]+$")
+
+
+PAGINA_PRUEBAS = Path(__file__).with_name("static") / "prueba.html"
 
 
 def crear_app(motor=None, whatsapp=None, config: Config | None = None) -> FastAPI:
@@ -152,6 +163,32 @@ def crear_app(motor=None, whatsapp=None, config: Config | None = None) -> FastAP
                 tareas.add_task(procesar, m)
                 encolados += 1
         return {"status": "recibido", "encolados": encolados}
+
+    if config.chat_pruebas:
+        log.warning("CHAT_PRUEBAS=1: /prueba habilitado sin autenticación. No exponer en producción.")
+
+        @app.get("/prueba", response_class=HTMLResponse)
+        def pagina_pruebas():
+            return PAGINA_PRUEBAS.read_text(encoding="utf-8")
+
+        @app.post("/prueba/chat")
+        def chat_pruebas(datos: MensajePrueba):
+            # Prefijo propio: nunca comparte historial con un wa_id real.
+            conversacion = f"prueba:{datos.sesion}"
+            inicio = time.monotonic()
+            try:
+                respuesta = obtener_motor().responder(datos.mensaje.strip(), conversacion)
+            except Exception as e:  # noqa: BLE001 - en pruebas se muestra el error
+                log.exception("Fallo en /prueba/chat")
+                raise HTTPException(status_code=502, detail=f"{type(e).__name__}: {e}")
+            return {"respuesta": respuesta, "segundos": round(time.monotonic() - inicio, 2),
+                    "modelo": obtener_motor().modelo}
+
+        @app.post("/prueba/reiniciar")
+        def reiniciar_pruebas(datos: dict):
+            sesion = str(datos.get("sesion", ""))[:64]
+            obtener_motor().olvidar(f"prueba:{sesion}")
+            return {"status": "ok"}
 
     return app
 
