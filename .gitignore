@@ -13,8 +13,6 @@ __pycache__/
 .env.local
 
 # Bases de datos locales generadas
-data/chroma_db/
-data/vectorstore/
 *.sqlite3
 *.db
 

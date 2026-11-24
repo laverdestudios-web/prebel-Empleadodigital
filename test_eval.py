@@ -54,6 +54,9 @@ def run_tests():
         print(f"  Pregunta: '{test['question']}'")
         
         result = agent.ask(test["question"])
+        if result.get("error"):
+            print(f"  ❌ ERROR TÉCNICO: {result['error']} (revisa ANTHROPIC_API_KEY y la conexión)")
+            continue
         answer = result["answer"].lower()
         
         # Verificar palabras clave esperadas

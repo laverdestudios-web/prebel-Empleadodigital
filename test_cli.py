@@ -20,6 +20,7 @@ def main():
     print("Escribe 'salir' para terminar.\n")
     
     agent = get_agent()
+    history = []
     
     while True:
         try:
@@ -31,19 +32,26 @@ def main():
                 break
                 
             print("\n⏳ Consultando base de conocimientos...")
-            result = agent.ask(user_input)
+            result = agent.ask(user_input, history=history)
             
             print("\n" + "-" * 60)
             print("📋 RESPUESTA DEL ASISTENTE:")
             print("-" * 60)
             print(result["answer"])
             
-            if result.get("sources"):
+            usage = result.get("usage")
+            if usage:
                 print("\n" + "." * 60)
-                print("🔍 FUENTES RECUPERADAS:")
-                for s in result["sources"]:
-                    print(f"  • [{s['score']}] {s['section']} ({s['source']})")
+                print(f"  Modelo: {usage['model']} | stop_reason: {usage['stop_reason']}")
+                print(f"  Tokens entrada: {usage['input_tokens']} | caché leída: {usage['cache_read_input_tokens']}"
+                      f" | caché escrita: {usage['cache_creation_input_tokens']} | salida: {usage['output_tokens']}")
                 print("." * 60)
+
+            if not result.get("error"):
+                history += [
+                    {"role": "user", "content": user_input},
+                    {"role": "assistant", "content": result["answer"]},
+                ]
                 
         except KeyboardInterrupt:
             print("\n👋 Sesión terminada.")
