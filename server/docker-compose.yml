@@ -1,0 +1,21 @@
+# Uso (desde server/):  cp .env.example .env  &&  docker compose up -d --build
+services:
+  empleado-digital:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile
+    image: prebel-empleado-digital:latest
+    env_file: .env
+    ports:
+      # Publicar solo en localhost: la entrada pública debe ser un reverse
+      # proxy con TLS (nginx/Caddy/IIS) o un túnel (Cloudflare Tunnel, ngrok).
+      - "127.0.0.1:8000:8000"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
