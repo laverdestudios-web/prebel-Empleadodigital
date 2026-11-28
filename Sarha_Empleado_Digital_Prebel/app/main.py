@@ -5,6 +5,7 @@ from __future__ import annotations
 from urllib.parse import parse_qs
 
 from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, PlainTextResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -25,6 +26,16 @@ app = FastAPI(
     title=settings.app_name,
     description="Chatbot de Gestión Humana Prebel S.A.S. BIC (SARHA Web + Twilio WhatsApp + Meta Cloud API)",
     version="1.1.0",
+)
+
+# CORS: permite que la landing-v3 (React) use /api/chat y /api/twilio/info desde otro origen.
+# En producción se define CORS_ORIGINS con el dominio real (por ejemplo, el de Vercel o Cloudflare).
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=list(settings.cors_origins),
+    allow_credentials=False,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 if settings.static_dir.exists():

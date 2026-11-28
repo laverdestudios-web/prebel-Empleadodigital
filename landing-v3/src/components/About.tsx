@@ -1,5 +1,5 @@
 import { WHATSAPP_URL } from "../config";
-import { TALK_EVENT } from "./VoiceDock";
+import { CHAT_EVENT, TALK_EVENT } from "./VoiceDock";
 import Ethics from "./Ethics";
 import s from "./About.module.css";
 
@@ -39,6 +39,7 @@ const NEXT = [
 ];
 
 const talk = () => window.dispatchEvent(new Event(TALK_EVENT));
+const chat = () => window.dispatchEvent(new Event(CHAT_EVENT));
 
 export default function About() {
   return (
@@ -148,8 +149,11 @@ export default function About() {
           <button className={s.btnBlue} onClick={talk}>
             Hablar con SARHA
           </button>
+          <button className={s.btnOutline} onClick={chat}>
+            Chatear aquí
+          </button>
           <a className={s.btnOutline} href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-            Escribirle por WhatsApp
+            Habla con SARHA en WhatsApp
           </a>
         </div>
       </section>

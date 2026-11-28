@@ -13,7 +13,7 @@ Eres el agente de integración del repositorio `laverdestudios-web/prebel-Emplea
 
 | Carpeta | Qué es | Motor de IA |
 |---|---|---|
-| `landing-v3/` | Landing en React + Vite + GSAP: zoom al ojo (130 cuadros MAGI-2 en `public/sarha/zoom/`), voz en vivo con Gemini Live (`api/liveToken.ts`, `src/voice/`), secciones de ética y privacidad | Gemini Live (token efímero; la key nunca va al navegador) |
+| `landing-v3/` | Landing en React + Vite + GSAP: zoom al ojo (130 cuadros MAGI-2 en `public/sarha/zoom/`), voz en vivo con Gemini Live (`api/liveToken.ts`, `src/voice/`), chat escrito que usa `POST /api/chat` del backend de Sarha (`src/chat/`, `ChatPanel.tsx`), secciones de ética y privacidad | Gemini Live (token efímero; la key nunca va al navegador) |
 | `landing/` | Landing v2 estática (HTML/CSS/JS) | — |
 | `Sarha_Empleado_Digital_Prebel/` | Proyecto completo de WhatsApp con **Twilio**, web v2, menú numérico, autogestión, métricas y pitch (de maoescabe-png) | BM25 local + LLM opcional |
 | `server/` | Webhook de WhatsApp (FastAPI) y chat de pruebas `/prueba` | `brain/chatbot_groq.py` (Gemini o Groq vía API compatible con OpenAI) |
@@ -49,7 +49,7 @@ Eres el agente de integración del repositorio `laverdestudios-web/prebel-Emplea
    pip install -r requirements.txt -r server/requirements.txt -r server/requirements-dev.txt
    python -m pytest -q server/tests brain/tests              # hoy: 33 pasan
    cd Sarha_Empleado_Digital_Prebel && pip install -r requirements.txt && python -m pytest -q tests && cd ..
-   #   hoy: 17 pasan y 1 falla de antes (test_self_service_endpoints: busca "Angela.quintero" con mayúscula)
+   #   hoy: 18 pasan
    cd landing-v3 && npm install && npm run build && cd ..    # debe terminar en "built"
    ```
    Si una prueba que antes pasaba ahora falla, **no hagas push**: muéstrame el error y propón el arreglo.

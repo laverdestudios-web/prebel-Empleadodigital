@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import type { Caption, LiveVoice, VoiceStatus } from "../voice/liveVoice";
+import ChatPanel from "./ChatPanel";
 import s from "./VoiceDock.module.css";
 
 /** Abre la voz desde cualquier botón de la página: window.dispatchEvent(new Event(TALK_EVENT)) */
 export const TALK_EVENT = "sarha:talk";
+/** Abre el chat escrito (el mismo bot de WhatsApp): window.dispatchEvent(new Event(CHAT_EVENT)) */
+export const CHAT_EVENT = "sarha:chat";
 
 const LABEL: Record<VoiceStatus, string> = {
   idle: "Toca para hablar con SARHA",
@@ -20,12 +23,15 @@ export default function VoiceDock() {
   const [detail, setDetail] = useState("");
   const [captions, setCaptions] = useState<Caption[]>([]);
   const [text, setText] = useState("");
+  const [tab, setTab] = useState<"voz" | "chat">("voz");
+  const [chatOpened, setChatOpened] = useState(false);
   const voiceRef = useRef<LiveVoice | null>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
   // El SDK de Google (~500 KB) se carga solo al activar la voz
   const start = async () => {
     setOpen(true);
+    setTab("voz");
     setCaptions([]);
     if (!voiceRef.current) {
       setStatus("connecting");
@@ -46,12 +52,19 @@ export default function VoiceDock() {
     voiceRef.current.start();
   };
   const stop = () => voiceRef.current?.stop();
+  const openChat = () => {
+    setOpen(true);
+    setTab("chat");
+    setChatOpened(true);
+  };
 
   useEffect(() => {
     const onTalk = () => start();
     window.addEventListener(TALK_EVENT, onTalk);
+    window.addEventListener(CHAT_EVENT, openChat);
     return () => {
       window.removeEventListener(TALK_EVENT, onTalk);
+      window.removeEventListener(CHAT_EVENT, openChat);
       voiceRef.current?.stop();
     };
   }, []);
@@ -73,12 +86,16 @@ export default function VoiceDock() {
   return (
     <div className={s.dock} data-open={open} data-status={status}>
       {open && (
-        <div className={s.panel} role="dialog" aria-label="Conversación por voz con SARHA">
+        <div className={s.panel} role="dialog" aria-label="Conversación con SARHA">
           <div className={s.head}>
             <div>
               <strong>SARHA</strong>
               <span className={s.state} aria-live="polite">
-                {status === "error" ? detail || LABEL.error : detail || LABEL[status]}
+                {tab === "chat"
+                  ? "Chat escrito · el mismo de WhatsApp"
+                  : status === "error"
+                    ? detail || LABEL.error
+                    : detail || LABEL[status]}
               </span>
             </div>
             <button
@@ -92,6 +109,21 @@ export default function VoiceDock() {
               ×
             </button>
           </div>
+          <div className={s.tabs} role="tablist">
+            <button role="tab" aria-selected={tab === "voz"} data-on={tab === "voz"} onClick={() => setTab("voz")}>
+              Voz
+            </button>
+            <button role="tab" aria-selected={tab === "chat"} data-on={tab === "chat"} onClick={openChat}>
+              Chat
+            </button>
+          </div>
+          {chatOpened && (
+            <div hidden={tab !== "chat"}>
+              <ChatPanel />
+            </div>
+          )}
+          {tab === "voz" && (
+          <>
           <div className={s.captions} aria-live="polite">
             {captions.length === 0 && (
               <p className={s.hint}>
@@ -134,6 +166,8 @@ export default function VoiceDock() {
             Responde solo con los documentos oficiales de Gestión Humana y puede equivocarse: valida con Gestión Humana. No guarda la
             conversación.
           </p>
+          </>
+          )}
         </div>
       )}
       <button className={s.launch} onClick={live ? stop : start} aria-label={live ? "Terminar conversación" : "Hablar con SARHA"}>

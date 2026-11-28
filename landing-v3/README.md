@@ -59,3 +59,27 @@ npx wrangler login
 npx wrangler secret put GEMINI_API_KEY
 npx wrangler deploy
 ```
+
+## Chat escrito (el mismo bot de WhatsApp)
+
+- En el panel de SARHA hay dos pestañas: **Voz** (Gemini Live) y **Chat**. El chat usa `POST /api/chat` del backend `Sarha_Empleado_Digital_Prebel/`, el mismo motor que responde en WhatsApp. Trae el menú numérico (1–5, 0, 00) como botones, deja escribir libre y muestra el aviso de privacidad (Ley 1581).
+- Cada pestaña del navegador tiene su `session_id` (en `sessionStorage`) para que el menú recuerde dónde va. No identifica a la persona y no se guarda nada.
+- Variables (en `landing-v3/.env.local`, opcionales):
+  - `VITE_SARHA_API_URL`: URL del backend. Por defecto es `/api`, que en desarrollo pasa por el proxy de `vite.config.ts` hacia `http://localhost:8000`.
+  - `VITE_SARHA_WA_NUMBER`: línea de WhatsApp. Por defecto `12272405417` (Twilio + Meta Business).
+- El backend permite el origen de la landing con `CORS_ORIGINS` (ver `Sarha_Empleado_Digital_Prebel/.env.example`). En producción se agrega ahí el dominio real.
+
+## Demo completa (backend + landing)
+
+```bash
+# Terminal 1: backend de SARHA (chat web y WhatsApp)
+cd Sarha_Empleado_Digital_Prebel
+python -m venv venv && source venv/bin/activate      # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --port 8000
+
+# Terminal 2: landing
+cd landing-v3
+npm install
+npm run dev      # abrir http://localhost:5173 en Chrome
+```

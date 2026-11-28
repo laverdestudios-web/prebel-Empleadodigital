@@ -21,6 +21,15 @@ class Settings:
     static_dir: Path = BASE_DIR / "static"
     host: str = os.getenv("HOST", "0.0.0.0")
     port: int = int(os.getenv("PORT", "8000"))
+    # Orígenes web que pueden llamar a la API (landing-v3). Separados por coma.
+    cors_origins: tuple[str, ...] = tuple(
+        o.strip()
+        for o in os.getenv(
+            "CORS_ORIGINS",
+            "http://localhost:5173,http://127.0.0.1:5173,http://localhost:4173,http://127.0.0.1:4173",
+        ).split(",")
+        if o.strip()
+    )
 
     # Optional LLM configuration (if omitted, runs 100% locally via deterministic RAG)
     llm_provider: str = os.getenv("LLM_PROVIDER", "local").strip().lower()

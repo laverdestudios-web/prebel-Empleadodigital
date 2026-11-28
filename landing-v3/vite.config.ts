@@ -42,7 +42,13 @@ function liveTokenApi(): Plugin {
 }
 
 // base './' para que la carpeta dist/ funcione servida desde cualquier ruta (Docker, Nginx, Cloudflare)
+// En desarrollo, /api/* va al backend de SARHA (Sarha_Empleado_Digital_Prebel, puerto 8000).
+// /api/live-token no pasa por el proxy: lo responde el plugin de arriba, que se monta antes.
+const SARHA_BACKEND = process.env.SARHA_BACKEND ?? 'http://localhost:8000'
+
 export default defineConfig({
   base: './',
   plugins: [react(), liveTokenApi()],
+  server: { proxy: { '/api': { target: SARHA_BACKEND, changeOrigin: true } } },
+  preview: { proxy: { '/api': { target: SARHA_BACKEND, changeOrigin: true } } },
 })

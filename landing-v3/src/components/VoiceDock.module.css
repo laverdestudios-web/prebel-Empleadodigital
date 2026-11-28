@@ -89,6 +89,8 @@
   display: flex;
   flex-direction: column;
   gap: calc(14 * var(--u));
+  max-height: calc(100svh - var(--header-h) - 100px);
+  overflow-y: auto;
   animation: rise 0.25s var(--ease);
 }
 
@@ -121,6 +123,30 @@
   font-size: calc(26 * var(--u));
   line-height: 1;
   color: var(--muted);
+}
+
+.tabs {
+  display: flex;
+  gap: calc(4 * var(--u));
+  padding: calc(4 * var(--u));
+  border-radius: var(--r-pill);
+  box-shadow: var(--neu-inset);
+}
+
+.tabs button {
+  flex: 1;
+  height: calc(36 * var(--u));
+  border-radius: var(--r-pill);
+  color: var(--muted);
+  transition:
+    background var(--t-hover) var(--ease),
+    color var(--t-hover) var(--ease);
+}
+
+.tabs button[data-on="true"] {
+  background: var(--bg);
+  color: var(--blue);
+  box-shadow: var(--neu-raised-sm);
 }
 
 .captions {
