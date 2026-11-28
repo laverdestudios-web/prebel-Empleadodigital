@@ -45,8 +45,7 @@
   height: calc(226 * var(--u));
   padding: calc(20 * var(--u));
   border-radius: var(--r-callout);
-  background: rgba(233, 239, 240, 0.9);
-  backdrop-filter: blur(10px);
+  background: rgba(233, 239, 240, 0.94);
   box-shadow: var(--neu-raised);
   display: flex;
   flex-direction: column;
@@ -161,8 +160,7 @@
 
 .btnOutline {
   padding: 0 calc(24 * var(--u));
-  background: rgba(233, 239, 240, 0.88);
-  backdrop-filter: blur(8px);
+  background: rgba(233, 239, 240, 0.92);
   box-shadow: var(--neu-raised-sm);
 }
 
