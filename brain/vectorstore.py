@@ -34,7 +34,7 @@ class PrebelVectorStore:
                 data = json.load(f)
             self.chunks = data["chunks"]
             self.embeddings = np.array(data["embeddings"], dtype=np.float32)
-            if len(self.chunks) >= 88:
+            if len(self.chunks) >= 99:
                 return
 
         print("🚀 Generando base vectorial completa con documentos de Prebel...")
@@ -55,11 +55,12 @@ class PrebelVectorStore:
                     )
                     all_embeddings.append(response.embeddings[0].values)
                     valid_chunks.append(c)
-                    time.sleep(0.3)  # Rate limit safety
+                    time.sleep(0.65)  # Respeta cuota de 100 RPM del tier gratuito
                     break
                 except Exception as e:
                     if attempt < max_retries - 1:
-                        time.sleep(5)
+                        wait_s = 62 if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e) else 5
+                        time.sleep(wait_s)
                     else:
                         print(f"⚠️ Error en fragmento '{c['title']}': {e}")
             

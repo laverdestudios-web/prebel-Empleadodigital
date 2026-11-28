@@ -1,0 +1,101 @@
+{
+  "bot_official_name": "Gestión Humana Más Cerca de Ti",
+  "bot_persona_name": "SARHA",
+  "company": "Prebel S.A.S. BIC",
+  "operating_hours": {
+    "chatbot_availability": "24/7 (solo consultas informativas)",
+    "human_attention_schedule": "Pendiente parametrizar con Gestión Humana de Prebel",
+    "sla_escalation": "Pendiente parametrizar ANS con Gestión Humana de Prebel"
+  },
+  "public_codes": {
+    "PA": "Personal Administrativo",
+    "PO": "Personal Operativo",
+    "PI": "Personal de Impulso y Mercadeo",
+    "PP": "Personal Practicante"
+  },
+  "escalation_matrix": [
+    {
+      "name": "Angela Quintero",
+      "scope": "Vinculación, certificados laborales y seguridad social",
+      "publics": ["PO"],
+      "email": "angela.quintero@prebel.com.co",
+      "phone": "3234830720"
+    },
+    {
+      "name": "Michell Román",
+      "scope": "Vinculación, certificados laborales y seguridad social",
+      "publics": ["PA", "PI"],
+      "email": "michell.roman@prebel.com.co",
+      "phone": "3147710112"
+    },
+    {
+      "name": "Shirley Silgado",
+      "scope": "Nómina administrativa",
+      "publics": ["PA"],
+      "email": "shirley.silgado@prebel.com.co",
+      "phone": null
+    },
+    {
+      "name": "Yasmín Yepes",
+      "scope": "Nómina operativa",
+      "publics": ["PO"],
+      "email": "yasmin.yepes@prebel.com.co",
+      "phone": null
+    },
+    {
+      "name": "Johanna Puentes",
+      "scope": "Cesantías e incapacidades de impulso y mercadeo",
+      "publics": ["PI", "PA", "PO", "PP"],
+      "email": "johanna.puentes@prebel.com.co",
+      "phone": "3104589490"
+    },
+    {
+      "name": "Cristina Giraldo",
+      "scope": "Nómina de impulso y mercadeo y practicantes",
+      "publics": ["PI", "PP"],
+      "email": "cristina.giraldo@prebel.com.co",
+      "phone": null
+    },
+    {
+      "name": "Stefanny Pulgarín Correa",
+      "scope": "Bienestar, RSE, créditos, auxilios, beneficios y registro de mascotas",
+      "publics": ["PA", "PO", "PI", "PP"],
+      "email": "stefanny.pulgarin@prebel.com.co",
+      "phone": "3104057760"
+    },
+    {
+      "name": "Linda Salamanca",
+      "scope": "Consulta de vacaciones de impulso y mercadeo",
+      "publics": ["PI"],
+      "email": "linda.salamanca@prebel.com.co",
+      "phone": "3102150234"
+    },
+    {
+      "name": "Nathalia León",
+      "scope": "Business Partner (Sede Productora y Sede Rionegro)",
+      "publics": ["PA", "PO"],
+      "email": null,
+      "phone": null
+    },
+    {
+      "name": "Laura Jaramillo",
+      "scope": "Business Partner (Sede Comercial y personal fuera de sede)",
+      "publics": ["PA", "PI"],
+      "email": "laura.jaramillo@prebel.com.co",
+      "phone": null
+    }
+  ],
+  "emergency_channels": {
+    "medical_emergency_on_site": "Servicio EMI, gestionado a través de un brigadista (Sedes Productora, Comercial y Rionegro)",
+    "work_accident_or_incident": "Reportar de inmediato a la Business Partner o al personal de SST; el colaborador afectado debe escalar el reporte ARL a su jefe directo",
+    "psychological_support_red_de_amor": "604 3607080, opción 3",
+    "desahogadero_program": "Bienestar y RSE: 3104057760"
+  },
+  "data_governance": {
+    "ley_aplicable": "Ley Estatutaria 1581 de 2012 (Colombia)",
+    "store_conversations_in_pilot": false,
+    "allow_pii_in_chat": false,
+    "allow_medical_or_id_images": false,
+    "monthly_metrics_anonymized": true
+  }
+}

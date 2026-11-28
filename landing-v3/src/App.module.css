@@ -1,0 +1,52 @@
+.main {
+  position: relative;
+}
+
+.scene {
+  position: relative;
+  height: 400svh;
+}
+
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  opacity: 0;
+}
+
+.track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Velo claro detrás del texto del inicio: la foto de laboratorio es un fondo vivo. Se va con el zoom. */
+.veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(244, 247, 246, 0.82) 0%, rgba(244, 247, 246, 0.5) 28%, rgba(244, 247, 246, 0) 46%),
+    linear-gradient(0deg, rgba(244, 247, 246, 0.6) 0%, rgba(244, 247, 246, 0) 26%);
+}
+
+@media (max-width: 1023px) {
+  .veil {
+    background:
+      linear-gradient(180deg, rgba(244, 247, 246, 0.85) 0%, rgba(244, 247, 246, 0) 34%),
+      linear-gradient(0deg, rgba(244, 247, 246, 0.85) 0%, rgba(244, 247, 246, 0) 34%);
+  }
+}

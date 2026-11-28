@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import List, Dict
 
 KNOWLEDGE_FILES = [
+    "Aclaraciones_y_Contactos_Prebel_2026.md",
     "Auxilios_y_beneficios_Prebel_20260310.md",
     "Creditos_Prebel_20260310.md",
     "Vinculacion_y_nomina_20260310.md",

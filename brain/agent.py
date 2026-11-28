@@ -42,13 +42,14 @@ class PrebelAgent:
         if clean_q in greetings or len(clean_q) <= 4:
             return {
                 "answer": (
-                    "¡Hola! Soy tu asistente de Gestión Humana de Prebel. Puedo ayudarte con:\n\n"
+                    "¡Hola! 👋 Soy SARHA, tu asistente virtual de *Gestión Humana Más Cerca de Ti* de Prebel S.A.S. BIC. Puedo orientarte 24/7 sobre:\n\n"
                     "1. 📋 **Vinculación y Nómina** (certificados laborales, cesantías, EPS, pensiones, vacaciones, incapacidades)\n"
                     "2. 💰 **Créditos y Condiciones** (educación, salud, mascotas, vivienda)\n"
-                    "3. 🎁 **Auxilios y Beneficios** (educativos, visual/odontológico, salud mental, matrimonio, nacimiento y más)\n\n"
+                    "3. 🎁 **Auxilios y Beneficios** (educativos, visual/odontológico, salud mental, matrimonio, nacimiento y más)\n"
+                    "4. 🤝 **Business Partners y Procesos** (licencias, ausentismo, urgencias y acompañamiento)\n\n"
+                    "🔒 *Aviso de privacidad: Esta herramienta funciona con Inteligencia Artificial con fines estrictamente informativos (Ley 1581 de 2012). Por tu seguridad, no compartas en este chat tu cédula, desprendibles, salarios ni historias clínicas.*\n\n"
                     "¿Sobre cuál trámite o beneficio necesitas información?\n\n"
-                    "_Recuerda: respondo únicamente con base en los documentos oficiales de Gestión Humana._\n\n"
-                    "Este chatbot de Gestión Humana funciona con inteligencia artificial y puede cometer errores. "
+                    "Este asistente de Gestión Humana Más Cerca de Ti funciona con inteligencia artificial y puede cometer errores. "
                     "Te recomendamos validar la información o resolver cualquier duda con Stefanny Pulgarín, "
                     "Analista de Bienestar y RSE, o Michell Román, Asistente Gestión Humana."
                 ),

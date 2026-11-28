@@ -27,3 +27,8 @@ data/vectorstore/
 *.log
 scratch/
 tmp/
+
+# Material de trabajo local (casting generado, notas del vault)
+casting/
+CONTEXTO.md
+sesiones/

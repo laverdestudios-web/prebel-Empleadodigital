@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sarha · Chatbot de Gestión Humana Prebel</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-badge">P</div>
+        <div>
+          <h1>Prebel · Gestión Humana</h1>
+          <p>Asistente de Consulta y Autogestión</p>
+        </div>
+      </div>
+
+      <div class="channel-switch">
+        <span>Modo de vista:</span>
+        <div class="segmented" role="group" aria-label="Canal de respuesta">
+          <button type="button" class="seg-btn active" data-channel="web">Web</button>
+          <button type="button" class="seg-btn" data-channel="whatsapp">WhatsApp</button>
+        </div>
+      </div>
+
+      <button type="button" class="self-service-cta" id="openSelfServiceBtn">
+        ⚡ Autogestión de Trámites
+      </button>
+
+      <div class="sidebar-section">
+        <h2>Temas disponibles</h2>
+        <div id="categoriesList" class="categories-list"></div>
+      </div>
+
+      <div class="sidebar-footer">
+        <small>Base de conocimiento oficial en <code>docs/</code>. Respuestas 100% trazables.</small>
+      </div>
+    </aside>
+
+    <main class="chat-main" id="chatMain">
+      <header class="chat-header">
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+        <div class="header-info">
+          <strong id="headerTitle">Sarha · Gestión Humana Prebel</strong>
+          <span class="status-dot" id="statusBadge">Conectado · Base oficial</span>
+        </div>
+        <button type="button" class="btn-secondary" id="clearChatBtn">Nueva consulta</button>
+      </header>
+
+      <section class="chat-messages" id="chatMessages" aria-live="polite"></section>
+
+      <div class="suggestions-bar" id="suggestionsBar"></div>
+
+      <form class="chat-input-form" id="chatForm">
+        <input
+          type="text"
+          id="chatInput"
+          placeholder="Escribe tu consulta de Gestión Humana (ej. retiro de cesantías, certificado laboral, créditos)..."
+          autocomplete="off"
+          required
+        />
+        <button type="submit" class="send-btn" id="sendBtn">Enviar</button>
+      </form>
+    </main>
+  </div>
+
+  <!-- Modal Autogestión -->
+  <div class="modal-backdrop hidden" id="selfServiceModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modalTitle">⚡ Autogestión de Trámites</h2>
+        <button type="button" class="close-modal" id="closeModalBtn" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.82rem;color:#475569;margin:0 0 12px;background:#f0fdfa;border:1px solid #99f6e4;padding:8px 10px;border-radius:8px;">
+          🔒 <strong>Privacidad (Ley 1581 de 2012):</strong> Los datos personales abajo son 100% opcionales y <strong>no se almacenan</strong> en el servidor. Puedes dejarlos en blanco y copiar la plantilla con marcadores.
+        </p>
+        <div class="form-grid">
+          <label>
+            Trámite
+            <select id="ssProcedure"></select>
+          </label>
+          <label>
+            Tu nómina / Motivo
+            <select id="ssVariant"></select>
+          </label>
+          <label>
+            Nombre completo (opcional para plantilla)
+            <input type="text" id="ssName" placeholder="Ej. María Pérez" />
+          </label>
+          <label>
+            Cédula (opcional)
+            <input type="text" id="ssDoc" placeholder="Ej. 1037..." />
+          </label>
+          <label>
+            Correo electrónico (opcional)
+            <input type="email" id="ssEmail" placeholder="correo@prebel.com.co" />
+          </label>
+          <label>
+            Celular (opcional)
+            <input type="text" id="ssPhone" placeholder="Ej. 310..." />
+          </label>
+        </div>
+        <button type="button" class="btn-primary" id="generateGuideBtn">Generar guía y plantilla</button>
+
+        <div id="ssResult" class="ss-result hidden">
+          <h3 id="ssResultTitle"></h3>
+          <p class="ss-contact"><strong>Canal / Contacto:</strong> <span id="ssResultContact"></span></p>
+          <h4>Requisitos y pasos:</h4>
+          <ul id="ssResultChecklist"></ul>
+          <div class="template-box">
+            <div class="template-header">
+              <strong>Borrador listo para copiar:</strong>
+              <button type="button" class="btn-secondary" id="copyTemplateBtn">Copiar texto</button>
+            </div>
+            <pre id="ssResultTemplate"></pre>
+          </div>
+          <small class="ss-source" id="ssResultSource"></small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

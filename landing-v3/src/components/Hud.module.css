@@ -1,0 +1,82 @@
+.wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: calc(640 * var(--u));
+  height: calc(640 * var(--u));
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  opacity: 0;
+}
+
+.scan {
+  opacity: 0;
+  stroke: var(--white);
+  stroke-width: 1;
+  stroke-opacity: 0.25;
+}
+
+.mesh {
+  opacity: 0;
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 0.75;
+  stroke-opacity: 0.7;
+}
+
+.meshDot {
+  fill: var(--white);
+  stroke: none;
+}
+
+.strokes {
+  fill: none;
+  stroke: var(--hud);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.strokes path {
+  stroke-dasharray: 1;
+}
+
+.white {
+  stroke: var(--white);
+  stroke-width: 1.5;
+}
+
+@media (max-width: 1023px) {
+  .wrap {
+    width: calc(457 * var(--u));
+    height: calc(457 * var(--u));
+  }
+}
+
+.labels text {
+  fill: var(--white);
+  font-family: var(--font);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  paint-order: stroke;
+  stroke: rgba(20, 40, 50, 0.35);
+  stroke-width: 3px;
+}
+
+.labelDot {
+  fill: var(--hud);
+}
+
+.labelLine {
+  stroke: var(--hud);
+  stroke-width: 1;
+}

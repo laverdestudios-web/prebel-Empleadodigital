@@ -1,0 +1,86 @@
+/* Tokens de diseño de la landing SARHA. Escritorio diseñado a 1440 × 900; celular a 415 de ancho. */
+:root {
+  /* 1 px de diseño */
+  --u: min(100vw / 1440, 100svh / 760);
+
+  /* Paleta institucional Prebel */
+  --bg: #e9eff0;
+  --ink: #343d46;
+  --muted: #8a959c;
+  --number: #a7b1b6;
+  --blue: #5a84ac;
+  --green: #6ea190;
+  --cyan: #85bfd3;
+  --teal: #56736f;
+  --coral: #e39581;
+  --white: #ffffff;
+  --line: rgba(87, 95, 106, 0.22);
+
+  /* Neumorfismo sobrio: relieve suave con luz arriba-izquierda, sin brillos */
+  --neu-light: rgba(255, 255, 255, 0.85);
+  --neu-dark: rgba(150, 168, 176, 0.42);
+  --neu-raised: calc(-6 * var(--u)) calc(-6 * var(--u)) calc(16 * var(--u)) var(--neu-light),
+    calc(6 * var(--u)) calc(6 * var(--u)) calc(16 * var(--u)) var(--neu-dark);
+  --neu-raised-sm: calc(-3 * var(--u)) calc(-3 * var(--u)) calc(8 * var(--u)) var(--neu-light),
+    calc(3 * var(--u)) calc(3 * var(--u)) calc(8 * var(--u)) var(--neu-dark);
+  --neu-inset: inset calc(3 * var(--u)) calc(3 * var(--u)) calc(8 * var(--u)) var(--neu-dark),
+    inset calc(-3 * var(--u)) calc(-3 * var(--u)) calc(8 * var(--u)) var(--neu-light);
+  /* Botón de color: plano, con filo de luz arriba, línea de contacto abajo y sombra corta */
+  --btn-solid: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 0 rgba(30, 45, 60, 0.12),
+    0 calc(4 * var(--u)) calc(10 * var(--u)) rgba(52, 61, 70, 0.16);
+
+  /* Escáner */
+  --hud: #d8fdff;
+  --hud-glow: #5fd3ff;
+  --glow-core: #d9ffff;
+
+  /* Cursor */
+  --cursor-fill: rgba(86, 115, 111, 0.45);
+  --cursor-edge: rgba(255, 255, 255, 0.7);
+
+  /* Tipografía */
+  --font: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display-size: calc(72 * var(--u));
+  --text-size: calc(18 * var(--u));
+  --text-lh: calc(21 * var(--u));
+  --nav-size: calc(16 * var(--u));
+  --nav-lh: calc(19 * var(--u));
+  --card-title-size: calc(24 * var(--u));
+  --card-title-lh: calc(29 * var(--u));
+  --small-size: calc(14 * var(--u));
+  --small-lh: calc(17 * var(--u));
+
+  /* Espacio y forma */
+  --edge: calc(40 * var(--u));
+  --header-h: calc(80 * var(--u));
+  --r-pill: 99px;
+  --r-callout: calc(40 * var(--u));
+  --r-card-img: calc(20 * var(--u));
+  --r-card: calc(28 * var(--u));
+  --r-dot: calc(4 * var(--u));
+
+  /* Capas (las 4 fuentes) */
+  --lens-h: calc(330 * var(--u));
+  --lens-step: calc(170 * var(--u));
+
+  /* Movimiento */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-hover: 200ms;
+  --t-card: 300ms;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --u: min(100vw / 415, 100svh / 760);
+    --display-size: calc(40 * var(--u));
+    --text-size: calc(16 * var(--u));
+    --text-lh: calc(19 * var(--u));
+    --card-title-size: calc(20 * var(--u));
+    --card-title-lh: calc(24 * var(--u));
+    --edge: calc(20 * var(--u));
+    --header-h: calc(64 * var(--u));
+    --r-card: calc(24 * var(--u));
+    --lens-h: calc(220 * var(--u));
+    --lens-step: calc(70 * var(--u));
+  }
+}
