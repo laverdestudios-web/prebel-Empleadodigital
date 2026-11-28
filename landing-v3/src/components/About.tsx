@@ -155,6 +155,9 @@ export default function About() {
           <a className={s.btnOutline} href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
             Habla con SARHA en WhatsApp
           </a>
+          <a className={s.btnOutline} href="#presentacion">
+            Ver la presentación
+          </a>
         </div>
       </section>
 

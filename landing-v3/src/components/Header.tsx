@@ -18,9 +18,14 @@ export default function Header() {
           </a>
         ))}
       </nav>
-      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={s.cta}>
-        Habla con SARHA
-      </a>
+      <div className={s.actions}>
+        <a href="#presentacion" className={s.present}>
+          Presentación
+        </a>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={s.cta}>
+          Habla con SARHA
+        </a>
+      </div>
     </header>
   );
 }
