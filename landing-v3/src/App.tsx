@@ -29,7 +29,7 @@ const SCENE = {
   end: 3,
 } as const;
 
-const LENS_BLUR = 16;
+const LENS_BLUR = 8;
 
 type Ready = { image: ImageBitmap | null } | null;
 

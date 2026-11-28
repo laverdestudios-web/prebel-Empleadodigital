@@ -60,7 +60,7 @@
   --r-dot: calc(4 * var(--u));
 
   /* Capas (las 4 fuentes) */
-  --lens-h: calc(360 * var(--u));
+  --lens-h: calc(330 * var(--u));
   --lens-step: calc(170 * var(--u));
 
   /* Movimiento */

@@ -10,9 +10,7 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
-  background: rgba(233, 239, 240, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(233, 239, 240, 0.9);
   opacity: 0;
 }
 

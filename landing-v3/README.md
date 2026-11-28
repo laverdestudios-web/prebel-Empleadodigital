@@ -32,6 +32,14 @@ npm run build      # genera dist/, estático: sirve en Nginx, Docker o cualquier
 - `sarha-ojo.webp`, 940 × 788: recorte del ojo para la tarjeta del inicio.
 - `logo-prebel.png`, 300 × 63.
 
+## Rendimiento
+
+- El canvas solo se redibuja cuando cambia el scroll o el tamaño de la ventana.
+- No hay `backdrop-filter` encima del video, porque obliga a recalcular el desenfoque en cada cuadro.
+- Las hojas no usan sombra con `filter`.
+- El hover de las tarjetas solo anima color, `translate` y `opacity`; el alto no cambia, así que la fila no se reacomoda.
+- Medido en Chrome: 59 fps al hacer scroll y 60 fps en el hover.
+
 ## Accesibilidad y movimiento
 
 - Con "reducir movimiento" activado en el sistema no hay zoom, escáner ni desenfoques: el contenido aparece con un fundido y las capas ya salen abiertas.
@@ -41,7 +49,7 @@ npm run build      # genera dist/, estático: sirve en Nginx, Docker o cualquier
 ## Portada y zoom al ojo
 
 - La portada es el primer cuadro del video, quieto: no sigue el cursor (Juan lo descartó).
-- `public/sarha/zoom/`: 130 cuadros del video **MAGI-2** (5 s, 1080p, hecho desde la foto de SARHA) que entra a su ojo izquierdo. El scroll los recorre en el canvas, sin reproducir video. `IRIS_TRACK` (`PortraitCanvas.tsx`) guarda la posición y el tamaño del iris por cuadro, para que el escáner caiga justo sobre él. El video original está en `PREBEL/casting/sarha-zoom-magi2.mp4`.
+- `public/sarha/zoom.mp4`: el video **MAGI-2** (5 s, 130 cuadros, hecho desde la foto de SARHA) que entra a su ojo izquierdo. Está codificado con todos sus cuadros independientes (`-g 1`), así que saltar a cualquier punto es instantáneo y gasta poca memoria. No se reproduce: el scroll elige el cuadro y se dibuja en el canvas. Para regenerarlo: `ffmpeg -i casting/sarha-zoom-magi2.mp4 -an -vf scale=1440:810 -c:v libx264 -crf 22 -g 1 -movflags +faststart zoom.mp4`. `IRIS_TRACK` (`PortraitCanvas.tsx`) guarda la posición y el tamaño del iris por cuadro, para que el escáner caiga justo sobre él. El video original está en `PREBEL/casting/sarha-zoom-magi2.mp4`.
 - `public/sarha/avatar.webp`: la cara de SARHA en el botón de voz.
 
 ## Hablar con SARHA (voz)

@@ -1,7 +1,9 @@
 .box {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  /* A la derecha del título «Una sola respuesta» para no taparlo */
+  left: 61%;
+  top: 55%;
+  will-change: transform, opacity;
   width: 0;
   height: 0;
   opacity: 0;
@@ -13,6 +15,7 @@
   left: 0;
   top: 0;
   translate: calc(-50% + var(--i) * var(--lens-step) * var(--spread)) -50%;
+  will-change: translate;
 }
 
 .sheet {
@@ -20,7 +23,7 @@
   height: var(--lens-h);
   width: auto;
   aspect-ratio: 250 / 360;
-  filter: drop-shadow(0 calc(18 * var(--u)) calc(30 * var(--u)) rgba(52, 61, 70, 0.14));
+  /* sombra barata: una elipse borrosa ya pintada, no un filtro por cuadro */
 }
 
 .dot {
@@ -41,4 +44,23 @@
 
 .dot[data-on="true"] {
   opacity: 1;
+}
+
+.layer::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: calc(-14 * var(--u));
+  height: calc(28 * var(--u));
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(52, 61, 70, 0.16), transparent);
+  z-index: -1;
+}
+
+@media (max-width: 1023px) {
+  .box {
+    left: 50%;
+    top: 52%;
+  }
 }

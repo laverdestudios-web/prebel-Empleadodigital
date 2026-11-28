@@ -72,10 +72,16 @@ export default function VoiceDock() {
   // Aro que late con la voz de SARHA
   useEffect(() => {
     let raf = 0;
+    let last = "";
     const tick = () => {
       raf = requestAnimationFrame(tick);
-      const lvl = voiceRef.current?.outputLevel() ?? 0;
-      ringRef.current?.style.setProperty("--lvl", lvl.toFixed(3));
+      const v = voiceRef.current;
+      const lvl = v && v.status !== "idle" ? v.outputLevel() : 0;
+      const val = lvl.toFixed(2);
+      if (val !== last) {
+        last = val;
+        ringRef.current?.style.setProperty("--lvl", val);
+      }
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
