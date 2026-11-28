@@ -1,0 +1,87 @@
+{
+  "organization": "Prebel S.A.S. BIC",
+  "assistant_name": "SARHA · Gestión Humana Más Cerca de Ti",
+  "schedule": {
+    "bot_availability": "24/7 para consultas informativas documentales",
+    "human_attention_note": "Las solicitudes que requieran atención humana serán gestionadas dentro del horario hábil de Gestión Humana (parametrizable). Emergencias médicas y accidentes se atienden sin restricción de horario por los canales oficiales."
+  },
+  "sla_ans": {
+    "configurable": true,
+    "default_note": "Pendiente de parametrización oficial por Gestión Humana de Prebel."
+  },
+  "contacts": {
+    "certificados_operativo": {
+      "name": "Angela Quintero",
+      "role": "Vinculación, certificados y seguridad social (PO)",
+      "email": "angela.quintero@prebel.com.co",
+      "phone": "3234830720"
+    },
+    "certificados_admin_impulso": {
+      "name": "Michell Román",
+      "role": "Vinculación, certificados y seguridad social (PA / PI)",
+      "email": "michell.roman@prebel.com.co",
+      "phone": "3147710112"
+    },
+    "nomina_administrativa": {
+      "name": "Shirley Silgado",
+      "role": "Nómina administrativa (PA)",
+      "email": "shirley.silgado@prebel.com.co",
+      "phone": ""
+    },
+    "nomina_operativa": {
+      "name": "Yasmín Yepes",
+      "role": "Nómina operativa (PO)",
+      "email": "yasmin.yepes@prebel.com.co",
+      "phone": ""
+    },
+    "cesantias_e_incapacidades_impulso": {
+      "name": "Johanna Puentes",
+      "role": "Cesantías e incapacidades Impulso y Mercadeo (PI)",
+      "email": "johanna.puentes@prebel.com.co",
+      "whatsapp": "3104589490"
+    },
+    "incapacidades_operativo": {
+      "name": "Gestión Humana · Incapacidades Operativo",
+      "role": "Reporte de incapacidades (PO)",
+      "email": "incapacidades@prebel.com.co",
+      "phone": ""
+    },
+    "nomina_impulso_practicantes": {
+      "name": "Cristina Giraldo",
+      "role": "Nómina Impulso y Mercadeo (PI) y Practicantes (PP)",
+      "email": "cristina.giraldo@prebel.com.co",
+      "phone": ""
+    },
+    "bienestar_creditos_auxilios": {
+      "name": "Stefanny Pulgarín Correa",
+      "role": "Analista de Bienestar y RSE (créditos, auxilios, beneficios y registro de mascotas)",
+      "email": "stefanny.pulgarin@prebel.com.co",
+      "phone": "3104057760"
+    },
+    "vacaciones_impulso": {
+      "name": "Linda Salamanca",
+      "role": "Consulta de vacaciones Impulso y Mercadeo (PI)",
+      "email": "linda.salamanca@prebel.com.co",
+      "phone": "3102150234"
+    },
+    "business_partner_productora_rionegro": {
+      "name": "Nathalia León",
+      "role": "Business Partner · Sede Productora y Sede Rionegro",
+      "email": "",
+      "phone": ""
+    },
+    "business_partner_comercial": {
+      "name": "Laura Jaramillo",
+      "role": "Business Partner · Sede Comercial y fuera de sede",
+      "email": "laura.jaramillo@prebel.com.co",
+      "phone": ""
+    }
+  },
+  "urgencies": {
+    "emergencias_medicas_sede": "Servicio EMI a través de un brigadista (sedes Productora, Comercial y Rionegro)",
+    "accidentes_incidentes": "Reportar a la Business Partner o al personal de SST",
+    "arl_accidentes": "Escalar al jefe directo para reporte a ARL",
+    "red_de_amor": "604 3607080, opción 3",
+    "desahogadero": "Bienestar y RSE: 3104057760"
+  }
+}

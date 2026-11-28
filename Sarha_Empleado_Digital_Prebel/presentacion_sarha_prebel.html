@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pitch 3 min · SARHA – Chatbot de Gestión Humana Prebel</title>
+  <style>
+    :root {
+      --slate: #575F6A;
+      --ink: #273038;
+      --muted: #5C6A75;
+      --blue: #5A84AC;
+      --cyan: #85BFD3;
+      --teal: #56736F;
+      --green: #6EA190;
+      --coral: #E39581;
+      --bg: #F3F6F5;
+      --white: #FFFFFF;
+      --line: rgba(87, 95, 106, 0.16);
+      --wa-bg: #111B21;
+      --wa-bubble-in: #202C33;
+      --wa-bubble-out: #005C4B;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+      background: #1B2329;
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 20px 68px;
+    }
+
+    .slide {
+      display: none;
+      width: min(1240px, 100%);
+      height: min(690px, 100%);
+      background: var(--white);
+      border-radius: 22px;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
+      padding: 44px 54px;
+      position: relative;
+      overflow: hidden;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: fadeSlide 0.25s ease;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-cover {
+      background:
+        radial-gradient(circle at 86% 20%, rgba(133, 191, 211, 0.38) 0, transparent 38%),
+        radial-gradient(circle at 10% 88%, rgba(227, 149, 129, 0.28) 0, transparent 36%),
+        linear-gradient(125deg, #F6F9F8 0%, #E7F1F1 55%, #F5EAE5 100%);
+    }
+
+    .slide-dark {
+      background: linear-gradient(125deg, #27323B 0%, #3C5368 55%, #466560 100%);
+      color: #F4F8F8;
+    }
+
+    .slide-dark p, .slide-dark li { color: #DCE6EA; }
+
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .time-tag {
+      background: rgba(227, 149, 129, 0.2);
+      color: #8A4030;
+      border: 1px solid rgba(227, 149, 129, 0.5);
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .slide-dark .time-tag {
+      background: rgba(227, 149, 129, 0.22);
+      color: #FFD9CF;
+      border-color: rgba(227, 149, 129, 0.45);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 2px;
+      background: var(--coral);
+    }
+
+    .slide-dark .eyebrow { color: #CBE6EC; }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      font-size: clamp(40px, 4.6vw, 60px);
+      line-height: 1.06;
+      margin: 14px 0 16px;
+      letter-spacing: -0.025em;
+    }
+
+    h1 em { color: var(--blue); font-style: italic; }
+
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      font-size: clamp(27px, 2.9vw, 37px);
+      margin: 8px 0 4px;
+      color: var(--ink);
+    }
+
+    .slide-dark h2 { color: #FFFFFF; }
+
+    .subtitle {
+      font-size: 17px;
+      color: var(--muted);
+      margin: 0;
+      max-width: 720px;
+      line-height: 1.5;
+    }
+
+    .slide-header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .slide-dark .slide-header { border-bottom-color: rgba(255, 255, 255, 0.16); }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .slide-dark .slide-footer {
+      color: #C7D7DC;
+      border-top-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px 22px;
+    }
+
+    .card-white {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: 0 8px 24px rgba(39, 48, 56, 0.06);
+    }
+
+    .card-accent {
+      background: linear-gradient(135deg, #EEF6F7, #F9F2EE);
+      border: 1px solid rgba(90, 132, 172, 0.25);
+      border-radius: 16px;
+      padding: 20px 22px;
+    }
+
+    .card h3, .card-white h3, .card-accent h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: var(--teal);
+    }
+
+    .card p, .card li, .card-white p, .card-white li, .card-accent p, .card-accent li {
+      font-size: 14.5px;
+      line-height: 1.5;
+      color: #3E4C56;
+      margin: 0 0 6px;
+    }
+
+    ul.clean { margin: 6px 0 0; padding-left: 18px; }
+
+    .kpi {
+      background: linear-gradient(145deg, #FFFFFF, #EDF4F4);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 15px 16px;
+      text-align: center;
+    }
+
+    .kpi strong {
+      display: block;
+      font-size: 28px;
+      font-family: Georgia, serif;
+      color: var(--blue);
+    }
+
+    .kpi span { font-size: 12px; color: var(--muted); font-weight: 700; }
+
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 32px;
+      align-items: center;
+      flex: 1;
+    }
+
+    .orb-wrap { display: grid; place-items: center; }
+
+    .orb {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 28%, #F7FCFC 0 8%, #B9DCE3 32%, #85BFD3 60%, #5A84AC 100%);
+      box-shadow: inset -22px -24px 48px rgba(64, 95, 116, 0.35), 0 28px 60px rgba(86, 115, 111, 0.25);
+      display: grid;
+      place-items: center;
+    }
+
+    .orb-inner {
+      width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #FFFFFF, #E5F1F1);
+      display: grid;
+      place-items: center;
+      font-family: Georgia, serif;
+      font-size: 72px;
+      color: var(--teal);
+      box-shadow: 0 12px 30px rgba(39, 48, 56, 0.16);
+    }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .pill {
+      background: rgba(86, 115, 111, 0.1);
+      color: var(--teal);
+      border: 1px solid rgba(86, 115, 111, 0.22);
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+
+    .arch-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1.15fr auto 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .arch-arrow { font-size: 26px; color: var(--blue); font-weight: 800; text-align: center; }
+
+    .arch-box {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 15px;
+      height: 100%;
+    }
+
+    .arch-box h3 {
+      margin: 0 0 10px;
+      font-size: 13.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--blue);
+    }
+
+    .arch-item {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 11px;
+      font-size: 12.5px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .wa-phone {
+      background: var(--wa-bg);
+      color: #E9EDEF;
+      border-radius: 18px;
+      padding: 13px;
+      font-size: 12px;
+      line-height: 1.42;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+    }
+
+    .wa-top {
+      background: #202C33;
+      margin: -13px -13px 4px;
+      padding: 9px 13px;
+      border-radius: 18px 18px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .wa-top small { color: #8696A0; font-weight: 500; font-size: 11px; display: block; }
+    .wa-msg { padding: 8px 10px; border-radius: 10px; max-width: 94%; }
+    .wa-out { background: var(--wa-bubble-out); align-self: flex-end; }
+    .wa-in { background: var(--wa-bubble-in); align-self: flex-start; }
+
+    .demo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--coral);
+      color: #1E252B;
+      font-weight: 800;
+      padding: 12px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 14px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .notes-drawer {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: min(390px, calc(100vw - 32px));
+      background: rgba(27, 35, 41, 0.96);
+      color: #ECF3F5;
+      border: 1px solid rgba(133, 191, 211, 0.35);
+      border-radius: 16px;
+      padding: 16px 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+      z-index: 40;
+      display: none;
+    }
+
+    .notes-drawer.open { display: block; }
+    .notes-drawer h4 { margin: 0 0 8px; color: var(--coral); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .notes-drawer p { margin: 0; font-size: 13.5px; line-height: 1.55; color: #E2ECEF; }
+
+    .controls {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 7px 14px;
+      border-radius: 999px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+      z-index: 30;
+      flex-wrap: wrap;
+    }
+
+    .controls button {
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--ink);
+      padding: 5px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12.5px;
+    }
+
+    .controls button:hover, .controls button.active-toggle {
+      background: var(--teal);
+      color: #fff;
+      border-color: var(--teal);
+    }
+
+    .slide-counter { font-size: 12.5px; font-weight: 800; color: var(--slate); min-width: 56px; text-align: center; }
+    .timer-pill {
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--blue);
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #EDF4F7;
+      cursor: pointer;
+    }
+    .timer-pill.warn { background: #FDECE8; color: #B43E28; }
+
+    @media print {
+      @page { size: landscape; margin: 0; }
+      html, body { background: #fff; overflow: visible; height: auto; }
+      .deck { display: block; padding: 0; height: auto; width: auto; }
+      .slide {
+        display: flex !important;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+        page-break-after: always;
+        break-after: page;
+      }
+      .controls, .notes-drawer { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck" id="deck">
+
+    <!-- SLIDE 1: PORTADA Y GANCHO (0:00 - 0:20) -->
+    <section class="slide slide-cover active" data-note="0:00 - 0:20 (20s): Buenos días. Hoy presentamos SARHA: Servicios Automatizados de Recursos Humanos Ágiles, nuestra solución al Reto Empresarial 7 de Prebel S.A.S. BIC. ¿Cuántas veces al día un colaborador operativo o administrativo necesita saber cómo retirar cesantías, pedir un certificado o acceder a un auxilio y no sabe a quién acudir? Con SARHA lo resuelve en segundos desde WhatsApp.">
+      <div class="cover-grid">
+        <div>
+          <div class="top-meta">
+            <span class="eyebrow">EstudIA · Reto Empresarial 7 · Prebel S.A.S. BIC</span>
+            <span class="time-tag">⏱ 0:00 – 0:20</span>
+          </div>
+          <h1><em>SARHA</em><br>Gestión Humana en un clic</h1>
+          <p class="subtitle">
+            <strong>Servicios Automatizados de Recursos Humanos Ágiles.</strong>
+            Fuente única de consulta y autogestión en <strong>WhatsApp y Web</strong> para todos los colaboradores de Prebel.
+          </p>
+          <div class="pill-row">
+            <span class="pill">WhatsApp Real (Twilio + Meta)</span>
+            <span class="pill">100% Base Oficial Prebel</span>
+            <span class="pill">Menú por Números + Pregunta Libre</span>
+            <span class="pill">Despliegue On-Premise</span>
+          </div>
+        </div>
+        <div class="orb-wrap">
+          <div class="orb"><div class="orb-inner">S</div></div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Prebel S.A.S. BIC · Contacto: Alexander Londoño Pineda (Ing. de Automatización)</span>
+        <span>Pitch 3 min · 1 / 6</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: EL PROBLEMA (0:20 - 0:45) -->
+    <section class="slide" data-note="0:20 - 0:45 (25s): En Prebel, todos los días el personal operativo, administrativo y de impulso y mercadeo tiene dudas sobre trámites de Gestión Humana. Hoy existe un GPT público en ChatGPT, pero no está integrado al canal que todos usan a diario —WhatsApp— ni desplegado en servidor propio. El reto: crear una fuente única, confiable y lista para correr on-premise con las bases oficiales de Prebel.">
+      <div class="slide-header">
+        <div class="top-meta">
+          <span class="eyebrow">01 · El Reto Empresarial</span>
+          <span class="time-tag">⏱ 0:20 – 0:45</span>
+        </div>
+        <h2>Una necesidad diaria en planta, oficinas e impulso</h2>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card-accent">
+            <h3>Situación actual</h3>
+            <ul class="clean">
+              <li>Consultas diarias sobre certificados, cesantías, incapacidades, créditos y auxilios.</li>
+              <li>Los colaboradores tienen dificultades para saber <strong>cómo gestionar o canalizar</strong> cada trámite según su tipo de nómina.</li>
+              <li>El GPT actual en ChatGPT es externo y no está conectado al canal cotidiano de <strong>WhatsApp</strong>.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Objetivo del reto</h3>
+            <ul class="clean">
+              <li>Habilitar una <strong>fuente única de consulta</strong> y autogestión en WhatsApp y Web.</li>
+              <li>Responder <strong>exclusivamente</strong> con los 4 documentos oficiales de Prebel (<code>docs/</code>).</li>
+              <li>Preparar una solución <strong>on-premise</strong> lista para la línea corporativa con Meta.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi"><strong>1.300</strong><span>Colaboradores potenciales</span></div>
+          <div class="kpi"><strong>4 Públicos</strong><span>PA · PO · PI · PP</span></div>
+          <div class="kpi"><strong>5 Docs</strong><span>Base oficial + aclaraciones</span></div>
+          <div class="kpi"><strong>24/7</strong><span>Disponibilidad inmediata</span></div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>SARHA · Prebel S.A.S. BIC</span>
+        <span>Pitch 3 min · 2 / 6</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: LA SOLUCIÓN (0:45 - 1:15) -->
+    <section class="slide" data-note="0:45 - 1:15 (30s): Nuestra solución es SARHA. Indexamos las 101 secciones de los 4 documentos oficiales: Vinculación y Nómina, Créditos, Auxilios y Glosario Business Partner. Diseñamos interacción dual: navegación por números (1 al 4, 0 atrás, 00 inicio) para que el personal operativo no tenga que redactar preguntas largas, y búsqueda libre en lenguaje natural. Además, garantiza cero alucinaciones, cita la fuente exacta e incluye un módulo de autogestión con plantillas listas para copiar.">
+      <div class="slide-header">
+        <div class="top-meta">
+          <span class="eyebrow">02 · Nuestra Solución</span>
+          <span class="time-tag">⏱ 0:45 – 1:15</span>
+        </div>
+        <h2>SARHA: navegación ágil, cero alucinaciones y autogestión</h2>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card-white">
+            <h3>🔢 Menú numérico + Texto libre</h3>
+            <p>El empleado responde <strong>1, 2, 3 o 4</strong> en WhatsApp (ideal para planta) o escribe su pregunta libremente.</p>
+            <p><strong>4 categorías:</strong> 📄 Vinculación y Nómina · 💳 Créditos · 🎁 Auxilios · 🤝 Business Partner.</p>
+          </div>
+          <div class="card-white">
+            <h3>🎯 100% fiel a Prebel</h3>
+            <p>Responde solo desde <code>docs/</code> respetando cifras, plazos y contactos exactos (incluye tablas HTML reconstruidas).</p>
+            <p>Si algo está fuera del alcance, responde con el <strong>aviso oficial</strong> y deriva a Stefanny Pulgarín o Michell Román.</p>
+          </div>
+          <div class="card-white">
+            <h3>⚡ Autogestión guiada</h3>
+            <p>En <code>/chat</code> el colaborador elige su trámite y su nómina para obtener el <strong>checklist exacto</strong>, el contacto correcto y el <strong>borrador listo para enviar</strong>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Reglas de tono y restricciones aplicadas desde Instrucciones_Tono_Ejemplos_Restricciones.md</span>
+        <span>Pitch 3 min · 3 / 6</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: ARQUITECTURA Y CALIDAD (1:15 - 1:40) -->
+    <section class="slide" data-note="1:15 - 1:40 (25s): Técnicamente es una arquitectura limpia en Python y FastAPI que corre 100% on-premise sin enviar datos a terceros ni pagar APIs de IA, aunque deja abierta la conexión opcional a Ollama local o Gemini. Tiene webhook real para Twilio WhatsApp con división automática de mensajes largos, webhook nativo listo para Meta Cloud API, empaquetado Docker y 15 pruebas automatizadas en verde.">
+      <div class="slide-header">
+        <div class="top-meta">
+          <span class="eyebrow">03 · Arquitectura y Calidad</span>
+          <span class="time-tag">⏱ 1:15 – 1:40</span>
+        </div>
+        <h2>100% On-Premise, segura y verificada con pruebas</h2>
+      </div>
+      <div class="slide-body">
+        <div class="arch-flow">
+          <div class="arch-box">
+            <h3>Canales</h3>
+            <div class="arch-item">🌐 Landing SARHA (<code>/</code>)</div>
+            <div class="arch-item">💬 WhatsApp Real (+1 227 240-5417)</div>
+            <div class="arch-item">⚡ Consola + Autogestión (<code>/chat</code>)</div>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-box">
+            <h3>Motor FastAPI (Python)</h3>
+            <div class="arch-item">🧭 Menú con estado por celular (<code>menu.py</code>)</div>
+            <div class="arch-item">🔎 Buscador BM25 local (<code>knowledge.py</code>)</div>
+            <div class="arch-item">🔌 Webhooks Twilio (<code>/twilio/webhook</code>) y Meta (<code>/webhook</code>)</div>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-box">
+            <h3>Datos, Ética y Despliegue</h3>
+            <div class="arch-item">📁 <code>docs/*.md</code> + matriz <code>config/contacts.json</code></div>
+            <div class="arch-item">🔒 Ley 1581: cero chats guardados, bloqueo de fotos/PII y analítica anonimizada</div>
+            <div class="arch-item">🐳 <code>Dockerfile</code> + ✅ <strong>18 / 18</strong> pruebas <code>pytest</code></div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Cero exposición de datos internos · LLM opcional (Ollama on-premise / Gemini / OpenAI)</span>
+        <span>Pitch 3 min · 4 / 6</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: DEMO EN VIVO (1:40 - 2:40) -->
+    <section class="slide slide-dark" data-note="1:40 - 2:40 (60s · DEMO EN VIVO): Veámoslo funcionando en tiempo real. 1) Desde la página de SARHA hacemos clic en 'Habla con SARHA', que abre WhatsApp hacia nuestra línea de prueba SARHA Prebel conectada con Twilio y Meta Business. 2) Enviamos 'Hola', vemos la bienvenida con emojis y elegimos 1 → 2 → 1 para ver los requisitos exactos de retiro de cesantías por compra de vivienda. 3) Probamos una pregunta fuera de alcance ('¿Cuál es el salario mínimo actual?') para mostrar que SARHA no inventa datos.">
+      <div class="slide-header">
+        <div class="top-meta">
+          <span class="eyebrow">04 · Demostración en Vivo</span>
+          <span class="time-tag">⏱ 1:40 – 2:40 (60s)</span>
+        </div>
+        <h2>SARHA funcionando en WhatsApp y Web</h2>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2" style="align-items:center;">
+          <div class="wa-phone">
+            <div class="wa-top">
+              <div>SARHA Prebel <small>+1 (227) 240-5417 · Meta + Twilio Online</small></div>
+              <span>WhatsApp</span>
+            </div>
+            <div class="wa-msg wa-out">Hola</div>
+            <div class="wa-msg wa-in">
+              ✨ <strong>Menú Principal · Gestión Humana Prebel</strong> ✨<br><br>
+              ¡Hola! 👋 Soy <strong>SARHA</strong>, Servicios Automatizados de Recursos Humanos Ágiles. Tu asistente virtual para encontrar orientación, consultar información y acceder de forma sencilla a los servicios de Recursos Humanos. 😊<br><br>
+              <strong>1.</strong> 📄 Vinculación y Nómina<br>
+              <strong>2.</strong> 💳 Créditos y Condiciones<br>
+              <strong>3.</strong> 🎁 Auxilios y Beneficios<br>
+              <strong>4.</strong> 🤝 Glosario y Business Partner
+            </div>
+            <div class="wa-msg wa-out">1 → 2 → 1</div>
+            <div class="wa-msg wa-in">
+              ¡Claro! Requisitos retiro de cesantías · Compra de vivienda:<br>
+              • Carta firmada a Gestión Humana · Promesa notariada · Matrícula &lt; 1 mes<br>
+              • Enviar a <strong>johanna.puentes@prebel.com.co</strong> · Dudas: 3104589490
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.18);">
+              <h3 style="color:#E39581;">Guion rápido de 60 segundos</h3>
+              <ul class="clean">
+                <li><strong>Paso 1 (10s):</strong> Clic en <em>«Habla con SARHA»</em> en la landing → abre WhatsApp real.</li>
+                <li><strong>Paso 2 (25s):</strong> Enviar <code>Hola</code> → <code>1</code> → <code>2</code> → <code>1</code> (cesantías) → <code>00</code>.</li>
+                <li><strong>Paso 3 (15s):</strong> Pregunta fuera de alcance (<em>«¿Cuál es el salario mínimo actual?»</em>) → bloqueo fiel.</li>
+                <li><strong>Paso 4 (10s):</strong> Mostrar autogestión de certificado laboral en <code>/chat</code>.</li>
+              </ul>
+            </div>
+            <div>
+              <a class="demo-btn" href="http://localhost:8000" target="_blank" rel="noopener noreferrer">
+                🚀 Abrir Demo SARHA en vivo ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Flujo probado en vivo con división automática de mensajes &gt;1500 caracteres</span>
+        <span>Pitch 3 min · 5 / 6</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: IMPACTO, PASO A PRODUCCIÓN Y CIERRE (2:40 - 3:00) -->
+    <section class="slide slide-cover" data-note="2:40 - 3:00 (20s): Para llevar SARHA a producción en Prebel solo se requieren tres pasos simples: levantar el contenedor Docker en su servidor local, vincular la línea corporativa oficial en Meta (nuestro endpoint /webhook ya está listo) y mantener actualizados los archivos Markdown en docs/. SARHA convierte la información de Gestión Humana en atención ágil, confiable y al alcance de cada colaborador. ¡Muchas gracias!">
+      <div class="slide-header">
+        <div class="top-meta">
+          <span class="eyebrow">05 · Paso a Producción e Impacto</span>
+          <span class="time-tag">⏱ 2:40 – 3:00</span>
+        </div>
+        <h2>Lista para despegar en Prebel S.A.S. BIC</h2>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card-white">
+            <h3>1. Despliegue inmediato</h3>
+            <p>Un solo comando con <strong>Docker Compose</strong> en el servidor on-premise de Prebel, con salida HTTPS.</p>
+          </div>
+          <div class="card-white">
+            <h3>2. Línea corporativa Meta</h3>
+            <p>Compatible tanto con <strong>Twilio</strong> (ya probado en vivo) como con <strong>Meta Cloud API</strong> directo (<code>/webhook</code>).</p>
+          </div>
+          <div class="card-white">
+            <h3>3. Autonomía total</h3>
+            <p>Gestión Humana actualiza los archivos <code>docs/*.md</code> cuando cambian montos o políticas, sin desarrollo adicional.</p>
+          </div>
+        </div>
+        <div class="card-accent" style="text-align:center;padding:24px;">
+          <h2 style="margin:0 0 8px;font-size:28px;color:var(--teal);">¡Muchas gracias!</h2>
+          <p style="font-size:16px;margin:0;color:var(--ink);">
+            <strong>SARHA · Prebel S.A.S. BIC</strong> — Información clara, precisa y al alcance de un mensaje de WhatsApp.
+          </p>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>¿Preguntas? · Atajos: ← / → navegar · N ver guion · T iniciar reloj 3:00 · F pantalla completa</span>
+        <span>Pitch 3 min · 6 / 6</span>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Panel flotante opcional de guion del presentador (tecla N) -->
+  <aside class="notes-drawer" id="notesDrawer">
+    <h4>🎙️ Guion sugerido (oculto al proyectar)</h4>
+    <p id="notesText"></p>
+  </aside>
+
+  <div class="controls">
+    <button type="button" id="prevBtn">← Anterior</button>
+    <span class="slide-counter" id="counter">1 / 6</span>
+    <button type="button" id="nextBtn">Siguiente →</button>
+    <span class="timer-pill" id="timerPill" title="Clic para iniciar/pausar cronómetro de 3:00">⏱ 03:00</span>
+    <button type="button" id="notesBtn">Guion (N)</button>
+    <button type="button" id="fsBtn">Pantalla completa</button>
+    <button type="button" id="pdfBtn">PDF</button>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.getElementById("counter");
+    const notesDrawer = document.getElementById("notesDrawer");
+    const notesText = document.getElementById("notesText");
+    const notesBtn = document.getElementById("notesBtn");
+    const timerPill = document.getElementById("timerPill");
+
+    let current = 0;
+    let remainingSec = 180;
+    let timerId = null;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((s, i) => s.classList.toggle("active", i === current));
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      notesText.textContent = slides[current].dataset.note || "";
+    }
+
+    function toggleNotes() {
+      const open = notesDrawer.classList.toggle("open");
+      notesBtn.classList.toggle("active-toggle", open);
+    }
+
+    function renderTimer() {
+      const m = String(Math.floor(remainingSec / 60)).padStart(2, "0");
+      const s = String(remainingSec % 60).padStart(2, "0");
+      timerPill.textContent = `⏱ ${m}:${s}`;
+      timerPill.classList.toggle("warn", remainingSec <= 30);
+    }
+
+    function toggleTimer() {
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+        return;
+      }
+      if (remainingSec <= 0) remainingSec = 180;
+      timerId = setInterval(() => {
+        remainingSec = Math.max(0, remainingSec - 1);
+        renderTimer();
+        if (remainingSec === 0) {
+          clearInterval(timerId);
+          timerId = null;
+        }
+      }, 1000);
+    }
+
+    timerPill.addEventListener("click", toggleTimer);
+    timerPill.addEventListener("dblclick", () => {
+      if (timerId) { clearInterval(timerId); timerId = null; }
+      remainingSec = 180;
+      renderTimer();
+    });
+
+    document.getElementById("prevBtn").addEventListener("click", () => showSlide(current - 1));
+    document.getElementById("nextBtn").addEventListener("click", () => showSlide(current + 1));
+    notesBtn.addEventListener("click", toggleNotes);
+    document.getElementById("pdfBtn").addEventListener("click", () => window.print());
+    document.getElementById("fsBtn").addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+        e.preventDefault();
+        showSlide(current + 1);
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        e.preventDefault();
+        showSlide(current - 1);
+      } else if (e.key.toLowerCase() === "n") {
+        toggleNotes();
+      } else if (e.key.toLowerCase() === "t") {
+        toggleTimer();
+      } else if (e.key.toLowerCase() === "f") {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    });
+
+    showSlide(0);
+    renderTimer();
+  </script>
+</body>
+</html>
