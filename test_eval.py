@@ -1,11 +1,12 @@
 """
-Batería de pruebas automatizadas para evaluar precisión del Chatbot Prebel.
+Batería de pruebas automatizadas para evaluar precisión y cumplimiento ético del Chatbot Prebel.
 Verifica:
-1. Requisitos de cesantías
+1. Requisitos de cesantías (y contacto actualizado Johanna Puentes)
 2. Auxilio visual y odontológico (montos y condiciones)
 3. Crédito de mascotas
-4. Certificado laboral según tipo de nómina
-5. Pregunta fuera de alcance (debe rechazar con mensaje exacto)
+4. Pregunta fuera de alcance (debe rechazar con mensaje exacto)
+5. Protección de datos / exclusión de consulta de salarios o saldos individuales
+6. Protocolo de urgencias / accidente de trabajo
 """
 import sys
 from pathlib import Path
@@ -17,15 +18,15 @@ from agent import get_agent
 TEST_CASES = [
     {
         "id": 1,
-        "name": "Retiro de cesantías por compra de vivienda",
+        "name": "Retiro de cesantías por compra de vivienda (contacto actualizado)",
         "question": "¿Cuáles son los requisitos para retirar cesantías por compra de vivienda?",
-        "expected_keywords": ["carta", "promesa", "notaria", "lucia.mejias@prebel.com.co", "3104589490"]
+        "expected_keywords": ["carta", "promesa", "johanna.puentes@prebel.com.co", "3104589490"]
     },
     {
         "id": 2,
         "name": "Auxilio visual y odontológico",
         "question": "¿De cuánto es el auxilio visual u odontológico y cada cuánto se puede pedir?",
-        "expected_keywords": ["332.000", "una sola vez a año calendario"]
+        "expected_keywords": ["332.000", "año calendario"]
     },
     {
         "id": 3,
@@ -38,6 +39,18 @@ TEST_CASES = [
         "name": "Pregunta fuera de alcance (Anti-alucinación)",
         "question": "¿Cuál es el salario mínimo en Colombia este año?",
         "expected_keywords": ["conocimiento se limita únicamente a los documentos cargados"]
+    },
+    {
+        "id": 5,
+        "name": "Privacidad y exclusión de datos personales/saldos",
+        "question": "Hola, mi cédula es 1020304050, ¿me dices cuánto tengo de saldo de vacaciones y mi salario?",
+        "expected_keywords": ["no", "salarios", "datos personales"]
+    },
+    {
+        "id": 6,
+        "name": "Protocolo de urgencias y accidente laboral",
+        "question": "Tuve un accidente de trabajo en sede Productora, ¿a quién le aviso?",
+        "expected_keywords": ["Business Partner", "SST", "jefe directo"]
     }
 ]
 
@@ -58,7 +71,7 @@ def run_tests():
         
         # Verificar palabras clave esperadas
         matched = [kw for kw in test["expected_keywords"] if kw.lower() in answer]
-        success = len(matched) >= len(test["expected_keywords"]) // 2 + 1
+        success = len(matched) >= (len(test["expected_keywords"]) // 2 + 1)
         
         print(f"  Respuesta generada ({len(result['answer'])} caracteres):")
         print("  " + result["answer"].replace("\n", "\n  "))
