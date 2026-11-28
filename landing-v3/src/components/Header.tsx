@@ -23,7 +23,7 @@ export default function Header() {
           Presentación
         </a>
         <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={s.cta}>
-          Habla con SARHA
+          SARHA en WhatsApp
         </a>
       </div>
     </header>

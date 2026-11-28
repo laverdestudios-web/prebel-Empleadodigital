@@ -5,7 +5,7 @@ import s from "./Ethics.module.css";
 
 const PRINCIPLES = [
   { t: "Transparencia", d: "Desde el primer mensaje sabes que hablas con una inteligencia artificial de apoyo, nunca con una persona." },
-  { t: "Fidelidad documental", d: "Responde solo con los documentos autorizados por Prebel. Sin internet, sin suposiciones. Si el dato no existe, lo dice." },
+  { t: "Fidelidad documental", d: "Responde solo con los documentos autorizados por Prebel. Sin buscar en internet ni suponer. Si el dato no existe, lo dice." },
   { t: "No sustitución", d: "Orienta sobre procedimientos y responsables. No toma decisiones laborales, médicas ni disciplinarias, ni hace trámites." },
   { t: "Equidad y accesibilidad", d: "Igual para personal administrativo, operativo, de impulso y mercadeo y practicantes, por texto o por voz." },
   { t: "Vinculación directa", d: "Aclara que los beneficios y auxilios aplican solo a colaboradores contratados directamente por Prebel." },

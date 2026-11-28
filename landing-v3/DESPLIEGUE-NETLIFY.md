@@ -56,3 +56,7 @@ Opción para la demo, gratis: **Render**, con el `Dockerfile` que ya existe.
 
 1. `VITE_SARHA_WA_NUMBER` en Netlify.
 2. El QR de la presentación es un archivo fijo: `public/presentacion/qr-whatsapp.svg`. Hay que generarlo de nuevo con el enlace `https://wa.me/<número>?text=Hola`, y cambiar `FACTS.waDisplay` en `src/presentation/content.ts`.
+
+## Pendiente del equipo
+
+Las dos copias de los documentos (`docs/` y `Sarha_Empleado_Digital_Prebel/docs/`) no coinciden: la del bot cambió a Lucía Mejía por Johanna Puentes y Cristina Giraldo. En `Auxilios_y_beneficios_Prebel_20260310.md`, línea 50, el correo de incapacidades de practicantes (PP) se cambió a johanna.puentes sin respaldo en las respuestas de Prebel (Johanna atiende impulso y mercadeo). El equipo debe decidir una sola versión aprobada y sincronizar las dos copias.

@@ -636,6 +636,49 @@
   white-space: pre-line;
 }
 
+/* ---------- Aviso: celular en vertical ---------- */
+.rotate {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(233, 239, 240, 0.94);
+  backdrop-filter: blur(6px);
+}
+
+.rotateCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 300px;
+  padding: 32px 28px;
+  border-radius: 28px;
+  background: var(--bg);
+  box-shadow: var(--p-raised-sm);
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.rotateCard strong {
+  font-weight: 500;
+}
+
+.rotateCard .btnBlue {
+  height: 48px;
+  padding: 0 24px;
+  font-size: 16px;
+}
+
+.rotateIcon {
+  font-size: 40px;
+  line-height: 1;
+  color: var(--blue);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .slide {
     animation: none;

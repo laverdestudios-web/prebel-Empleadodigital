@@ -75,7 +75,7 @@ const SLIDES: Slide[] = [
             <span className={s.num}>02</span>
             <h3>Gestión Humana</h3>
             <ul>
-              <li>Cada caso va a un responsable distinto según tema y público: {FACTS.responsibles} personas, sin un correo único.</li>
+              <li>Cada caso va a un responsable distinto según tema y público: son {FACTS.responsibles} responsables, más 2 Business Partner, y no hay un correo único.</li>
               <li>No tiene métricas: no sabe qué se pregunta ni qué queda sin respuesta.</li>
             </ul>
           </article>
@@ -142,7 +142,7 @@ const SLIDES: Slide[] = [
             <span className={s.num}>01</span>
             <h3>Base oficial</h3>
             <p>
-              {FACTS.docs} documentos de Gestión Humana, indexados en {FACTS.sections} secciones.
+              Las 4 bases oficiales de Gestión Humana más las aclaraciones de Prebel: {FACTS.docs} documentos, {FACTS.sections} secciones.
             </p>
           </article>
           <article className={s.card}>
@@ -164,7 +164,7 @@ const SLIDES: Slide[] = [
           </article>
         </div>
         <div className={s.band}>
-          <b>Listo para producción:</b> Docker en el servidor de Prebel. Para actualizar a SARHA, Gestión Humana edita sus documentos, sin tocar
+          <b>Preparado para producción:</b> Docker, listo para el servidor de Prebel. Para actualizar a SARHA, Gestión Humana edita sus documentos, sin tocar
           código.
         </div>
       </>
@@ -232,7 +232,7 @@ const SLIDES: Slide[] = [
           <article className={s.card}>
             <h3>3. Datos y despliegue</h3>
             <p className={s.chip}>Documentos oficiales, solo lectura</p>
-            <p className={s.chip}>Docker en el servidor de Prebel</p>
+            <p className={s.chip}>Docker, listo para el servidor de Prebel</p>
             <p className={s.chip}>Reporte anónimo de consultas</p>
           </article>
         </div>
@@ -260,9 +260,9 @@ const SLIDES: Slide[] = [
           </div>
           {[
             ["Canal", "ChatGPT, fuera del día a día", "WhatsApp, chat y voz en la web"],
-            ["Respuestas", "Generales, sin fuente", "Solo documentos oficiales, con fuente y responsable"],
+            ["Respuestas", "Con los documentos, pero solo dentro de ChatGPT", "Solo documentos oficiales, con fuente y responsable"],
             ["Gestión Humana", "Sin métricas de lo que se pregunta", "Reporte anónimo de temas y preguntas sin respuesta"],
-            ["Infraestructura", "Plataforma externa", "Servidor de Prebel con Docker, sin suscripción"],
+            ["Infraestructura", "Plataforma externa", "Preparada para el servidor de Prebel (Docker), sin suscripción de IA"],
           ].map(([k, a, b]) => (
             <div key={k} className={s.tr} role="row">
               <span role="cell" className={s.tk}>
@@ -293,7 +293,7 @@ const SLIDES: Slide[] = [
           </p>
           <ol className={s.steps}>
             <li>Abrimos la web de SARHA.</li>
-            <li>Clic en «Habla con SARHA» y se abre WhatsApp.</li>
+            <li>Clic en «SARHA en WhatsApp» y se abre el chat.</li>
             <li>Escribimos «Hola» y le preguntamos en vivo.</li>
           </ol>
           <div className={s.ctaRow}>
@@ -327,6 +327,7 @@ export default function Presentation() {
   const [i, setI] = useState(indexFromHash);
   const [scale, setScale] = useState(1);
   const [notes, setNotes] = useState(false);
+  const [portrait, setPortrait] = useState(false);
   const touch = useRef<number | null>(null);
 
   const go = useCallback((n: number) => {
@@ -340,9 +341,21 @@ export default function Presentation() {
     else void document.documentElement.requestFullscreen?.().catch(() => undefined);
   }, []);
 
-  // Escala del lienzo 1920 × 1080 a la ventana
+  // Si el hash cambia por fuera (enlace, botón atrás o escrito a mano), la diapositiva lo sigue: #presentacion/N
+  useEffect(() => {
+    const onHash = () => {
+      if (window.location.hash.startsWith("#presentacion")) setI(indexFromHash());
+    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+
+  // Escala del lienzo 1920 × 1080 a la ventana. En un celular vertical se pide girarlo.
   useLayoutEffect(() => {
-    const fit = () => setScale(Math.min(window.innerWidth / W, window.innerHeight / H));
+    const fit = () => {
+      setScale(Math.min(window.innerWidth / W, window.innerHeight / H));
+      setPortrait(window.innerWidth < 700 && window.innerHeight > window.innerWidth);
+    };
     fit();
     window.addEventListener("resize", fit);
     return () => window.removeEventListener("resize", fit);
@@ -398,6 +411,20 @@ export default function Presentation() {
           </footer>
         </section>
       </div>
+
+      {portrait && (
+        <div className={s.rotate} role="dialog" aria-label="Gira el celular">
+          <div className={s.rotateCard}>
+            <span className={s.rotateIcon} aria-hidden="true">
+              ⟳
+            </span>
+            <strong>Gira el celular para ver la presentación</strong>
+            <a className={s.btnBlue} href="#">
+              Ver la web
+            </a>
+          </div>
+        </div>
+      )}
 
       {notes && (
         <aside className={s.notes} aria-label="Notas del orador">

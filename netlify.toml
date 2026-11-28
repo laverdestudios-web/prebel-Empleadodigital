@@ -9,11 +9,11 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# Las imágenes y los cuadros del zoom no cambian entre despliegues con el mismo nombre de archivo
+# El video del zoom y las imágenes de SARHA: caché de 1 hora (pueden cambiar sin cambiar de nombre)
 [[headers]]
   for = "/sarha/*"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, max-age=3600"
 
 [[headers]]
   for = "/assets/*"

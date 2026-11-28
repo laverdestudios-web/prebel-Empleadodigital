@@ -22,7 +22,7 @@ export const FACTS = {
   sections: 120, // secciones que indexa hoy app/knowledge.py
   testsBot: 18, // Sarha_Empleado_Digital_Prebel/tests
   testsServer: 33, // server/tests + brain/tests
-  responsibles: 10, // matriz de escalamiento (respuesta 1.1 de Prebel)
+  responsibles: 8, // respuesta 1.1 de Prebel: 8 responsables por tema y público; además hay 2 Business Partner
   waDisplay: "+1 (227) 240-5417",
 };
 
@@ -37,24 +37,24 @@ EQUIPO (15–20 s)
 Cada integrante dice su nombre y su rol: 3 segundos por persona.`,
   problema: `PROBLEMA (40–45 s)
 «Este es un problema de dos lados. De un lado, los cerca de 1.300 colaboradores de Prebel —administrativos, operativos, de impulso y mercadeo y practicantes— tienen dudas todos los días sobre certificados, cesantías, vacaciones, incapacidades, créditos o auxilios, y no saben cómo gestionarlas ni a quién acudir.
-Del otro lado está Gestión Humana: cada caso le corresponde a un responsable distinto según el tema y el público —son 10 personas, sin un correo único— y la herramienta de hoy, un GPT público en ChatGPT, no le da métricas: no sabe qué se pregunta ni qué queda sin respuesta.
+Del otro lado está Gestión Humana: cada caso le corresponde a un responsable distinto según el tema y el público —son 8 responsables, más 2 Business Partner, y no hay un correo único— y la herramienta de hoy, un GPT público en ChatGPT, no le da métricas: no sabe qué se pregunta ni qué queda sin respuesta.
 Y ese GPT vive por fuera de WhatsApp, el canal que todos usan, y por fuera de la infraestructura de Prebel.»`,
   solucion: `SOLUCIÓN (≈20 s)
 «Por eso creamos a SARHA. Le escribes “Hola” por WhatsApp y te muestra un menú de cinco opciones: Vinculación y Nómina, Créditos, Auxilios, Business Partner, y Contactos y urgencias. Si prefieres, le escribes tu duda con tus palabras, o le hablas desde la web.
 SARHA responde solo con los documentos oficiales, cita la fuente y te dice a quién acudir. Si algo no está en los documentos, no inventa.»`,
   proceso: `CÓMO LLEGAMOS (≈20 s)
-«Indexamos los 5 documentos oficiales de Gestión Humana en 120 secciones. Construimos un motor de búsqueda propio, que funciona sin internet y recuerda en qué parte del menú va cada celular. Lo cubrimos con 51 pruebas automáticas, todas en verde. Y lo probamos en vivo con una línea real de WhatsApp conectada por Twilio y Meta.
+«Indexamos las 4 bases oficiales de Gestión Humana más las aclaraciones de Prebel: 5 documentos, 120 secciones. Construimos un motor de búsqueda propio, que funciona sin internet y recuerda en qué parte del menú va cada celular. Lo cubrimos con 51 pruebas automáticas, todas en verde. Y lo probamos en vivo con una línea real de WhatsApp conectada por Twilio y Meta.
 Queda listo para el servidor de Prebel con Docker: para actualizarlo, Gestión Humana edita sus documentos, sin tocar código.»`,
   web: `LA WEB DE SARHA (≈20 s)
 «Además del WhatsApp, SARHA tiene su web. Allí puedes hablarle con la voz, escribirle en un chat que usa el mismo motor de WhatsApp, o saltar a WhatsApp con un clic. Y deja claro cómo cuida tus datos: qué hace, qué no hace, los canales de urgencia y a quién te lleva según tu tema.»`,
   funciona: `CÓMO FUNCIONA (≈25 s)
-«Por dentro son tres capas. Los canales: WhatsApp, el chat de la web y la voz. El motor de SARHA, en Python: maneja el menú, busca en los documentos y responde con la fuente y el responsable. Y los datos: los documentos oficiales, montados en Docker en el servidor de Prebel.
+«Por dentro son tres capas. Los canales: WhatsApp, el chat de la web y la voz. El motor de SARHA, en Python: maneja el menú, busca en los documentos y responde con la fuente y el responsable. Y los datos: los documentos oficiales, montados en Docker, listos para el servidor de Prebel.
 El chat y WhatsApp se responden con búsqueda local, sin IA externa ni suscripción. La voz usa Gemini Live de Google con un token temporal: la clave nunca llega al navegador.
 Y tiene controles: si la pregunta no está, da el mensaje oficial; si la respuesta es larga, la divide para WhatsApp; y no pide ni guarda datos personales.»`,
   valor: `PROPUESTA DE VALOR (20–30 s)
-«¿Qué cambia con SARHA? El colaborador pregunta donde ya está: WhatsApp o la web. Recibe solo información oficial, con la fuente y el responsable. Gestión Humana, por fin, sabe qué se pregunta y qué falta en sus documentos, con un reporte anónimo. Y todo corre en el servidor de Prebel, sin costo de suscripción.»`,
+«¿Qué cambia con SARHA? El colaborador pregunta donde ya está: WhatsApp o la web. Recibe solo información oficial, con la fuente y el responsable. Gestión Humana, por fin, sabe qué se pregunta y qué falta en sus documentos, con un reporte anónimo. Y está preparado para correr en el servidor de Prebel, sin suscripción de IA: el chat y WhatsApp responden con búsqueda local; solo la voz usa Gemini.»`,
   cierre: `CIERRE (10–15 s) + PASO A LA DEMO
 «¿Recuerdan la pregunta del comienzo? ¿A quién le pregunta un trabajador de Prebel, a las 6 de la mañana, cómo retirar sus cesantías? Hoy esa pregunta ya tiene respuesta: a SARHA, desde su WhatsApp.»
-«Se lo mostramos en vivo.» → Botón «Ver la web», luego «Habla con SARHA» y escriban: Hola → 1 → 2 → 1 (retiro de cesantías por compra de vivienda). Después pregunten «¿Cuál es el salario mínimo actual?» para mostrar que no inventa.
+«Se lo mostramos en vivo.» → Botón «Ver la web», luego «SARHA en WhatsApp» y escriban: Hola → 1 → 2 → 1 (retiro de cesantías por compra de vivienda). Después pregunten «¿Cuál es el salario mínimo actual?» para mostrar que no inventa.
 Invitación: «Escaneen el código y escríbanle “Hola”.»`,
 };
