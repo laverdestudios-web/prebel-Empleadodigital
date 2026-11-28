@@ -25,6 +25,7 @@ npm run build      # genera dist/, estático: sirve en Nginx, Docker o cualquier
 | Iris al que entra el zoom y encuadre | `src/components/PortraitCanvas.tsx` (`IRIS`, `LEFT_BIAS`, `FACE_X`) |
 | Escáner del ojo | `src/components/Hud.tsx` |
 | Las 4 hojas (capas) | `src/components/LensStack.tsx` |
+| **Presentación** (diapositivas, notas, equipo, cifras) | `src/presentation/content.ts` y `src/presentation/Presentation.tsx` |
 
 ## Imágenes (`public/`)
 
@@ -58,6 +59,17 @@ npm run build      # genera dist/, estático: sirve en Nginx, Docker o cualquier
 - La key **nunca llega al navegador**: el navegador pide un token efímero a `/api/live-token`. En desarrollo lo da `vite.config.ts`, que lee `GEMINI_API_KEY` de `PREBEL/.env`. En producción lo da `worker/index.ts`.
 - SARHA responde **solo** con `docs/` (Vinculación y Nómina, Créditos, Auxilios y Beneficios, Glosario BP y las aclaraciones oficiales de Prebel). Las instrucciones están en `api/liveToken.ts`. Si cambia un documento, se corre `npm run knowledge`; el build también lo hace.
 - Si el navegador no da permiso al micrófono, se le puede escribir y responde con su voz.
+
+## Presentación del proyecto (`#presentacion`)
+
+- Botón **Presentación** en el encabezado y en la sección final. Abre el pitch de 8 diapositivas dentro de la misma web, con el mismo diseño (paleta Prebel, Instrument Sans, neumorfismo).
+- Teclas: **← →** o espacio para avanzar, **F** pantalla completa, **N** notas del orador, **Esc** volver a la web. `#presentacion/3` abre directo la diapositiva 3. En el celular se pasa deslizando.
+- El equipo y las cifras están en `src/presentation/content.ts`. Cada cifra dice de dónde sale (código o documento); si cambia en el backend, se actualiza ahí. Los integrantes con nombre vacío no se muestran.
+- Imágenes en `public/presentacion/`: captura de la web y el QR de WhatsApp.
+
+## Publicarla en Netlify
+
+Ver **[DESPLIEGUE-NETLIFY.md](DESPLIEGUE-NETLIFY.md)**: `netlify.toml` en la raíz, la voz como Netlify Function (`netlify/functions/live-token.mts`) y el backend de chat y WhatsApp aparte.
 
 ## Publicarla gratis (Cloudflare Workers)
 

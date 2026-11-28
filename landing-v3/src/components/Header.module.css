@@ -53,6 +53,28 @@
   opacity: 0.6;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--u));
+}
+
+/* Botón neumórfico: abre la presentación del proyecto (#presentacion) */
+.present {
+  height: calc(45 * var(--u));
+  padding: 0 calc(20 * var(--u));
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--r-pill);
+  background: var(--bg);
+  box-shadow: var(--neu-raised-sm);
+  transition: scale var(--t-hover) var(--ease);
+}
+
+.present:hover {
+  scale: 1.03;
+}
+
 .cta {
   height: calc(45 * var(--u));
   padding: 0 calc(20 * var(--u));
@@ -76,10 +98,20 @@
   .logo {
     height: calc(20 * var(--u));
   }
+  /* En el celular caben los dos botones: se ocultan la línea y la palabra SARHA junto al logo */
+  .divider,
+  .sarha {
+    display: none;
+  }
+  .actions {
+    gap: calc(8 * var(--u));
+  }
+  .present,
   .cta {
-    height: calc(40 * var(--u));
-    padding: 0 calc(16 * var(--u));
-    font-size: calc(16 * var(--u));
-    line-height: calc(19 * var(--u));
+    white-space: nowrap;
+    height: calc(38 * var(--u));
+    padding: 0 calc(13 * var(--u));
+    font-size: calc(14 * var(--u));
+    line-height: calc(17 * var(--u));
   }
 }

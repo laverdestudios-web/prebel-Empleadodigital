@@ -1,0 +1,21 @@
+# Despliegue de la web de SARHA (landing-v3) en Netlify.
+# Guía paso a paso: landing-v3/DESPLIEGUE-NETLIFY.md
+[build]
+  base = "landing-v3"
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# El video del zoom y las imágenes de SARHA: caché de 1 hora (pueden cambiar sin cambiar de nombre)
+[[headers]]
+  for = "/sarha/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

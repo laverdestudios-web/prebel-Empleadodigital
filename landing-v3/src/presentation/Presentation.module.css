@@ -1,0 +1,686 @@
+/* Presentación de SARHA: lienzo fijo de 1920 × 1080 px (se escala entero a la pantalla).
+   Mismo sistema visual que la web: paleta Prebel, Instrument Sans y neumorfismo sobrio con luz arriba-izquierda. */
+
+.viewport {
+  --p-raised: -10px -10px 26px rgba(255, 255, 255, 0.9), 10px 10px 26px rgba(150, 168, 176, 0.45);
+  --p-raised-sm: -5px -5px 14px rgba(255, 255, 255, 0.9), 5px 5px 14px rgba(150, 168, 176, 0.42);
+  --p-inset: inset 5px 5px 14px rgba(150, 168, 176, 0.42), inset -5px -5px 14px rgba(255, 255, 255, 0.9);
+  --p-solid: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 0 rgba(30, 45, 60, 0.12), 0 8px 20px rgba(52, 61, 70, 0.18);
+
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: center center;
+}
+
+.slide {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  padding: 104px 120px 150px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 28px;
+  line-height: 1.35;
+  animation: enter 0.55s var(--ease) both;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* ---------- Tipografía ---------- */
+.eyebrow {
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--teal);
+  letter-spacing: 0.01em;
+}
+
+.h2 {
+  margin-top: 18px;
+  font-size: 76px;
+  line-height: 0.98;
+  font-weight: 400;
+  font-stretch: 90%;
+  letter-spacing: -0.01em;
+  max-width: 1600px;
+}
+
+.display {
+  margin-top: 18px;
+  font-size: 104px;
+  line-height: 0.95;
+  font-weight: 400;
+  font-stretch: 90%;
+  letter-spacing: -0.015em;
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.lead {
+  margin-top: 28px;
+  font-size: 30px;
+  line-height: 1.35;
+  color: var(--ink);
+  max-width: 1000px;
+}
+
+.lead b,
+.dots b,
+.band b {
+  font-weight: 600;
+}
+
+.label {
+  font-size: 22px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+/* ---------- Tarjetas neumórficas ---------- */
+.card,
+.cardSm {
+  position: relative;
+  background: var(--bg);
+  border-radius: 36px;
+  box-shadow: var(--p-raised);
+  padding: 36px 36px 40px;
+}
+
+.cardSm {
+  border-radius: 28px;
+  padding: 26px 28px 28px;
+  box-shadow: var(--p-raised-sm);
+}
+
+.card h3,
+.cardSm h3 {
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: 500;
+  color: var(--blue);
+}
+
+.cardSm h3 {
+  font-size: 28px;
+}
+
+.card p,
+.cardSm p,
+.card li {
+  margin-top: 14px;
+  font-size: 26px;
+  line-height: 1.38;
+}
+
+.cardSm p {
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.card ul {
+  list-style: none;
+  margin-top: 8px;
+}
+
+.card li {
+  position: relative;
+  padding-left: 26px;
+}
+
+.card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--coral);
+}
+
+.num {
+  display: block;
+  font-size: 24px;
+  color: var(--number);
+  margin-bottom: 18px;
+}
+
+.cardBlue {
+  background: var(--blue);
+  color: var(--white);
+  box-shadow: var(--p-solid);
+}
+
+.cardBlue h3 {
+  color: var(--white);
+}
+
+.cardBlue .num {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cardBlue li::before {
+  background: var(--white);
+}
+
+/* ---------- Rejillas ---------- */
+.grid2 {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+}
+
+.grid3 {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+}
+
+.grid4 {
+  margin-top: 52px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.split {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 96px;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------- Pastillas ---------- */
+.pills {
+  margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.pill {
+  height: 56px;
+  padding: 0 26px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--r-pill);
+  background: var(--bg);
+  box-shadow: var(--p-raised-sm);
+  font-size: 22px;
+}
+
+.pillSolid {
+  background: var(--teal);
+  color: var(--white);
+  box-shadow: var(--p-solid);
+}
+
+/* ---------- 1 · Gancho ---------- */
+.heroImg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1100px;
+  height: 1080px;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+.heroVeil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--bg) 0%, var(--bg) 42%, rgba(233, 239, 240, 0.75) 56%, rgba(233, 239, 240, 0) 78%);
+}
+
+.heroText {
+  position: relative;
+  width: 1060px;
+}
+
+.hook {
+  margin-top: 22px;
+  font-size: 74px;
+  line-height: 1.02;
+  font-weight: 400;
+  font-stretch: 90%;
+  letter-spacing: -0.01em;
+}
+
+.team {
+  position: relative;
+  margin-top: auto;
+  width: 1060px;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.member {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 24px;
+  border-radius: 24px;
+  background: rgba(233, 239, 240, 0.92);
+  box-shadow: var(--p-raised-sm);
+}
+
+.member strong {
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.member span {
+  font-size: 20px;
+  color: var(--muted);
+}
+
+/* ---------- 3 · Solución ---------- */
+.avatarRing {
+  flex-shrink: 0;
+  width: 560px;
+  height: 560px;
+  border-radius: 50%;
+  padding: 22px;
+  background: var(--bg);
+  box-shadow: var(--p-raised);
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  box-shadow: var(--p-inset);
+}
+
+/* ---------- 4 y 6 · Banda ---------- */
+.band {
+  margin-top: auto;
+  padding: 26px 36px;
+  border-radius: 28px;
+  box-shadow: var(--p-inset);
+  font-size: 26px;
+  line-height: 1.35;
+}
+
+/* ---------- 5 · Web ---------- */
+.webText {
+  width: 640px;
+  flex-shrink: 0;
+}
+
+.dots {
+  list-style: none;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.dots li {
+  position: relative;
+  padding-left: 30px;
+  font-size: 26px;
+  line-height: 1.35;
+}
+
+.dots li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+
+.shotFrame {
+  flex: 1;
+  padding: 18px;
+  border-radius: 36px;
+  background: var(--bg);
+  box-shadow: var(--p-raised);
+}
+
+.shot {
+  width: 100%;
+  aspect-ratio: 1440 / 900;
+  border-radius: 22px;
+  object-fit: cover;
+}
+
+/* ---------- 6 · Flujo ---------- */
+.flow {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr 56px 1fr;
+  align-items: stretch;
+  gap: 14px;
+}
+
+.flow h3 {
+  margin-bottom: 18px;
+}
+
+.chip {
+  margin-top: 12px !important;
+  padding: 14px 18px;
+  border-radius: 18px;
+  box-shadow: var(--p-inset);
+  font-size: 23px !important;
+  line-height: 1.3 !important;
+}
+
+.cardBlue .chip {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+}
+
+.arrow {
+  align-self: center;
+  text-align: center;
+  font-size: 44px;
+  color: var(--coral);
+}
+
+/* ---------- 7 · Tabla ---------- */
+.table {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tr {
+  display: grid;
+  grid-template-columns: 300px 1fr 1.25fr;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 36px;
+  border-radius: 26px;
+  background: var(--bg);
+  box-shadow: var(--p-raised-sm);
+  font-size: 26px;
+  line-height: 1.3;
+}
+
+.th {
+  background: none;
+  box-shadow: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 22px;
+  color: var(--muted);
+}
+
+.tk {
+  color: var(--teal);
+  font-weight: 500;
+}
+
+.tb {
+  color: var(--blue);
+  font-weight: 500;
+}
+
+/* ---------- 8 · Cierre ---------- */
+.steps {
+  margin-top: 34px;
+  padding-left: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 26px;
+}
+
+.ctaRow {
+  margin-top: 40px;
+  display: flex;
+  gap: 18px;
+}
+
+.btnBlue,
+.btnOutline {
+  height: 68px;
+  padding: 0 34px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--r-pill);
+  font-size: 24px;
+  transition: scale var(--t-hover) var(--ease);
+}
+
+.btnBlue {
+  background: var(--blue);
+  color: var(--white);
+  box-shadow: var(--p-solid);
+}
+
+.btnOutline {
+  background: var(--bg);
+  box-shadow: var(--p-raised-sm);
+}
+
+.btnBlue:hover,
+.btnOutline:hover {
+  scale: 1.03;
+}
+
+.qrCard {
+  flex-shrink: 0;
+  width: 520px;
+  padding: 40px;
+  border-radius: 40px;
+  background: var(--bg);
+  box-shadow: var(--p-raised);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.qr {
+  width: 400px;
+  height: 400px;
+  padding: 18px;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: var(--p-inset);
+  margin-bottom: 14px;
+}
+
+.qrCard strong {
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.qrCard a {
+  font-size: 24px;
+  color: var(--blue);
+}
+
+/* ---------- Pie de cada diapositiva ---------- */
+.slideFoot {
+  position: absolute;
+  z-index: 1;
+  left: 120px;
+  right: 120px;
+  bottom: 56px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 20px;
+  color: var(--muted);
+}
+
+.slideFoot span:last-child {
+  margin-left: auto;
+  padding: 6px 16px;
+  border-radius: var(--r-pill);
+  background: rgba(233, 239, 240, 0.85);
+}
+
+.footLogo {
+  height: 28px;
+  width: auto;
+}
+
+/* ---------- Controles y notas (fuera del lienzo) ---------- */
+.controls {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--r-pill);
+  background: rgba(233, 239, 240, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: -4px -4px 12px rgba(255, 255, 255, 0.85), 4px 4px 12px rgba(150, 168, 176, 0.42);
+  font-size: 15px;
+  z-index: 5;
+  opacity: 0.45;
+  transition: opacity var(--t-hover) var(--ease);
+}
+
+.controls:hover,
+.controls:focus-within {
+  opacity: 1;
+}
+
+.ctrl {
+  min-width: 40px;
+  height: 36px;
+  padding: 0 12px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--r-pill);
+  background: var(--bg);
+  box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.85), 2px 2px 6px rgba(150, 168, 176, 0.4);
+  font-size: 15px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.ctrl[aria-pressed="true"] {
+  box-shadow: inset 2px 2px 6px rgba(150, 168, 176, 0.42), inset -2px -2px 6px rgba(255, 255, 255, 0.85);
+}
+
+.ctrl:disabled {
+  opacity: 0.35;
+}
+
+.counter {
+  min-width: 56px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.notes {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 70px;
+  max-height: 38vh;
+  overflow: auto;
+  padding: 16px 20px;
+  border-radius: 20px;
+  background: rgba(52, 61, 70, 0.94);
+  color: #f3f6f6;
+  font-size: 15px;
+  line-height: 1.45;
+  z-index: 5;
+}
+
+.notes p {
+  margin-top: 6px;
+  white-space: pre-line;
+}
+
+/* ---------- Aviso: celular en vertical ---------- */
+.rotate {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(233, 239, 240, 0.94);
+  backdrop-filter: blur(6px);
+}
+
+.rotateCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 300px;
+  padding: 32px 28px;
+  border-radius: 28px;
+  background: var(--bg);
+  box-shadow: var(--p-raised-sm);
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.rotateCard strong {
+  font-weight: 500;
+}
+
+.rotateCard .btnBlue {
+  height: 48px;
+  padding: 0 24px;
+  font-size: 16px;
+}
+
+.rotateIcon {
+  font-size: 40px;
+  line-height: 1;
+  color: var(--blue);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    animation: none;
+  }
+}

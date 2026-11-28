@@ -7,7 +7,7 @@ import s from "./About.module.css";
 const STATS = [
   { n: "1.300", l: "colaboradores pueden consultarla" },
   { n: "24/7", l: "disponible, también en festivos" },
-  { n: "4", l: "bases oficiales de Gestión Humana" },
+  { n: "4 + 1", l: "bases oficiales y las aclaraciones de Prebel" },
   { n: "0", l: "datos personales pedidos o guardados" },
 ];
 
@@ -27,7 +27,7 @@ const CANNOT = [
 
 const STEPS = [
   { t: "Escribes o le hablas", d: "Por WhatsApp o con la voz desde esta página, con tus propias palabras." },
-  { t: "Busca en las fuentes oficiales", d: "Solo en los documentos de Gestión Humana de Prebel. Sin internet y sin suposiciones." },
+  { t: "Busca en las fuentes oficiales", d: "Solo en los documentos de Gestión Humana de Prebel. Sin buscar en internet ni suponer." },
   { t: "Te responde y te orienta", d: "Con el dato exacto y el contacto responsable. Si no está documentado, te lo dice." },
 ];
 
@@ -154,6 +154,9 @@ export default function About() {
           </button>
           <a className={s.btnOutline} href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
             Habla con SARHA en WhatsApp
+          </a>
+          <a className={s.btnOutline} href="#presentacion">
+            Ver la presentación
           </a>
         </div>
       </section>
