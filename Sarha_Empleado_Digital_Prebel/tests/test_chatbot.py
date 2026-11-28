@@ -160,7 +160,7 @@ def test_self_service_endpoints() -> None:
             )
         )
     )
-    assert "Angela.quintero@prebel.com.co" in g["contact"]
+    assert "angela.quintero@prebel.com.co" in g["contact"].lower()
     assert "Carlos Ruiz" in g["template"]
 
 
