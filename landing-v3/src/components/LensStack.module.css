@@ -1,0 +1,44 @@
+.box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  --spread: 0;
+}
+
+.layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: calc(-50% + var(--i) * var(--lens-step) * var(--spread)) -50%;
+}
+
+.sheet {
+  display: block;
+  height: var(--lens-h);
+  width: auto;
+  aspect-ratio: 250 / 360;
+  filter: drop-shadow(0 calc(18 * var(--u)) calc(30 * var(--u)) rgba(52, 61, 70, 0.14));
+}
+
+.dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: calc(28 * var(--u));
+  height: calc(28 * var(--u));
+  border-radius: 50%;
+  background: var(--glow-core);
+  box-shadow:
+    0 0 calc(6 * var(--u)) calc(2 * var(--u)) var(--blue),
+    0 0 calc(34 * var(--u)) calc(10 * var(--u)) rgba(90, 132, 172, 0.35);
+  opacity: 0;
+  transition: opacity var(--t-card) var(--ease);
+}
+
+.dot[data-on="true"] {
+  opacity: 1;
+}

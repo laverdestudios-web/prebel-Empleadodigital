@@ -1,0 +1,28 @@
+.anchor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms linear;
+}
+
+.anchor[data-visible="true"] {
+  opacity: 1;
+}
+
+.disc {
+  width: calc(40 * var(--u));
+  height: calc(40 * var(--u));
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--cursor-fill);
+  box-shadow: inset 0 0 0 1px var(--cursor-edge);
+}
+
+@media not ((hover: hover) and (pointer: fine)) {
+  .anchor {
+    display: none;
+  }
+}

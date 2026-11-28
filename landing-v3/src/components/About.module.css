@@ -1,0 +1,247 @@
+.about {
+  position: relative;
+  background: var(--bg);
+  padding: 0 var(--edge);
+}
+
+.block {
+  padding: calc(140 * var(--u)) 0 calc(40 * var(--u));
+  border-top: 1px solid var(--line);
+}
+
+.eyebrow {
+  color: var(--teal);
+  margin-bottom: calc(18 * var(--u));
+}
+
+.h2 {
+  font-size: var(--display-size);
+  line-height: 0.95;
+  font-weight: 400;
+  font-stretch: 90%;
+  max-width: calc(1000 * var(--u));
+  margin-bottom: calc(48 * var(--u));
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(40 * var(--u));
+}
+
+.lead {
+  font-size: calc(22 * var(--u));
+  line-height: calc(30 * var(--u));
+  max-width: calc(620 * var(--u));
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: calc(16 * var(--u));
+  margin-top: calc(72 * var(--u));
+}
+
+.stat {
+  background: var(--bg);
+  box-shadow: var(--neu-raised);
+  border-radius: var(--r-card);
+  padding: calc(28 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--u));
+}
+
+.stat strong {
+  font-size: calc(64 * var(--u));
+  line-height: 1;
+  font-weight: 400;
+  font-stretch: 90%;
+  color: var(--blue);
+}
+
+.stat span {
+  color: var(--muted);
+}
+
+.steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(16 * var(--u));
+}
+
+.step {
+  background: var(--bg);
+  box-shadow: var(--neu-raised);
+  border-radius: var(--r-card);
+  padding: calc(28 * var(--u));
+}
+
+.num {
+  color: var(--number);
+  display: block;
+  margin-bottom: calc(40 * var(--u));
+}
+
+.step h3,
+.card h3 {
+  font-size: var(--card-title-size);
+  line-height: var(--card-title-lh);
+  font-weight: 500;
+  color: var(--blue);
+  margin-bottom: calc(12 * var(--u));
+}
+
+.quote {
+  margin-top: calc(40 * var(--u));
+  max-width: calc(760 * var(--u));
+  padding-left: calc(20 * var(--u));
+  border-left: 2px solid var(--coral);
+  color: var(--teal);
+}
+
+.card {
+  background: var(--bg);
+  box-shadow: var(--neu-raised);
+  border-radius: var(--r-card);
+  padding: calc(32 * var(--u));
+}
+
+.cardMuted {
+  box-shadow: var(--neu-inset);
+}
+
+.cardMuted h3 {
+  color: var(--ink);
+}
+
+.card ul,
+.next {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(14 * var(--u));
+}
+
+.card li,
+.next li {
+  padding-left: calc(22 * var(--u));
+  position: relative;
+}
+
+.card li::before,
+.next li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(8 * var(--u));
+  width: calc(8 * var(--u));
+  height: calc(8 * var(--u));
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.cardMuted li::before {
+  background: var(--coral);
+}
+
+.next {
+  max-width: calc(720 * var(--u));
+  font-size: calc(22 * var(--u));
+  line-height: calc(30 * var(--u));
+}
+
+.cta {
+  padding: calc(160 * var(--u)) 0;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cta .h2 {
+  margin-bottom: calc(24 * var(--u));
+}
+
+.cta .lead {
+  margin-bottom: calc(36 * var(--u));
+}
+
+.buttons {
+  display: flex;
+  gap: calc(12 * var(--u));
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btnBlue,
+.btnOutline {
+  height: calc(53 * var(--u));
+  padding: 0 calc(24 * var(--u));
+  border-radius: var(--r-pill);
+  display: inline-flex;
+  align-items: center;
+  transition: scale var(--t-hover) var(--ease);
+}
+
+.btnBlue:hover,
+.btnOutline:hover {
+  scale: 1.03;
+}
+
+.btnBlue {
+  background: var(--blue);
+  color: var(--white);
+  box-shadow: var(--btn-solid);
+}
+
+.btnOutline {
+  box-shadow: var(--neu-raised-sm);
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: calc(28 * var(--u)) 0 calc(110 * var(--u));
+  display: flex;
+  justify-content: space-between;
+  gap: calc(24 * var(--u));
+  color: var(--muted);
+  font-size: var(--small-size);
+  line-height: var(--small-lh);
+}
+
+@media (max-width: 1023px) {
+  .block {
+    padding-top: calc(96 * var(--u));
+  }
+  .two,
+  .steps {
+    grid-template-columns: 1fr;
+    gap: calc(16 * var(--u));
+  }
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    gap: calc(10 * var(--u));
+    margin-top: calc(40 * var(--u));
+  }
+  .stat strong {
+    font-size: calc(44 * var(--u));
+  }
+  .lead,
+  .next {
+    font-size: calc(18 * var(--u));
+    line-height: calc(24 * var(--u));
+  }
+  .num {
+    margin-bottom: calc(20 * var(--u));
+  }
+  .footer {
+    flex-direction: column;
+  }
+}

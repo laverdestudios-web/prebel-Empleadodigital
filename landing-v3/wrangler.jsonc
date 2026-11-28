@@ -1,0 +1,9 @@
+// Despliegue gratis en Cloudflare Workers:
+//   npm run build && npx wrangler secret put GEMINI_API_KEY && npx wrangler deploy
+{
+  "name": "sarha-prebel",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": "./dist", "binding": "ASSETS", "run_worker_first": ["/api/*"] }
+}
